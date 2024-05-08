@@ -1,5 +1,17 @@
-X: 0.69
-Number of Terms (n): 29
-Approximation Result (F(X)): 0.524728
-Math Function Result (MathF(X)): 0.524729
-Epsilon (eps): 0.000001
+num_sentences: 10
+num_narrative: 9
+avg_sentence_length: 4.684931506849315
+avg_word_length: 4.684931506849315
+num_smiles: 1
+short_words: ['This', 'is', 'a', 'text', 'for', 'It', 'Some', 'end', 'with', 'a', 'with', 'a', 'mark', 'are', 'also', 'The', 'of', 'a', 'is', '10', 'in', 'this', 'text', 'have', 'and', 'long', 'ones', 'can', 'be', 'in', 'like', 'or', 'D', 'for', 'This', 'text', 'also', 'like', 'WhAt', 'tHe', 'HeLl']
+modified_text: This is a sample text for testing purposes.
+It contains multiple sentences. Some end with a period. Others with a question mark?
+There are also imperative sentences! 
+The average length of a sentence is about 10 words.
+Words in this text have various lengths, including short and long ones.
+Smiles can be found in texts like :) or :-D, for example.
+This text also includes repeated words like testing, testing, testing.
+Wh_?_At t_?_He He_?_Ll
+even_length_words: ['This', 'is', 'sample', 'text', 'purposes', 'It', 'contains', 'multiple', 'Some', 'with', 'period', 'Others', 'with', 'question', 'mark', 'also', 'imperative', 'length', 'of', 'sentence', 'is', '10', 'in', 'this', 'text', 'have', 'long', 'ones', 'Smiles', 'be', 'in', 'like', 'or', 'This', 'text', 'also', 'includes', 'repeated', 'like', 'WhAt', 'HeLl']
+shortest_a_word: a
+repeated_words: {'sentences', 'for', 'is', 'with', 'in', 'text', 'testing', 'words', 'like', 'also', 'This', 'a'}

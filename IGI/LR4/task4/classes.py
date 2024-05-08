@@ -20,7 +20,6 @@ class Color:
 
 class Rectangle(GeometricFigure):
     def __init__(self, width, height, color):
-        super().__init__()
         self.width = width
         self.height = height
         self.color = Color(color)
@@ -42,4 +41,3 @@ class Pentagon(GeometricFigure):
 
     def get_info(self):
         return f"Pentagon {self.color.color} with side length {self.side_length} and area {self.calculate_area()}"
-

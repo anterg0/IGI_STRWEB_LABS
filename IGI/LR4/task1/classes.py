@@ -27,17 +27,14 @@ class AdmissionSystem:
 class MusicApplicant(Applicant):
     def __init__(self, name, instrument, music_genre):
         super().__init__(name, instrument)
-        self.__music_genre = music_genre  # Приватное свойство для жанра музыки
+        self.__music_genre = music_genre 
 
-    # Геттер для получения жанра музыки
     def get_music_genre(self):
         return self.__music_genre
 
-    # Сеттер для установки жанра музыки
     def set_music_genre(self, music_genre):
         self.__music_genre = music_genre
 
-    # Свойство для доступа к жанру музыки через геттер и сеттер
     music_genre = property(get_music_genre, set_music_genre)
 
     def display_info(self):
@@ -47,17 +44,14 @@ class MusicApplicant(Applicant):
 class MusicAdmissionSystem(AdmissionSystem):
     def __init__(self):
         super().__init__()
-        self.__applicants = []  # Приватный список абитуриентов
+        self.__applicants = []
 
-    # Геттер для получения списка абитуриентов
     def get_applicants(self):
         return self.__applicants
 
-    # Сеттер для установки списка абитуриентов
     def set_applicants(self, applicants):
         self.__applicants = applicants
 
-    # Свойство для доступа к списку абитуриентов через геттер и сеттер
     applicants = property(get_applicants, set_applicants)
     
     def get_genre_exam_list(self, genre):
@@ -67,7 +61,6 @@ class MusicAdmissionSystem(AdmissionSystem):
                 exam_list.append(applicant.name)
         return exam_list
 
-    # Переопределение метода add_applicant для учета MusicApplicant
     def add_applicant(self, name, instrument, music_genre):
         applicant = MusicApplicant(name, instrument, music_genre)
         self.applicants.append(applicant)
