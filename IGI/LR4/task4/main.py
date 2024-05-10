@@ -17,6 +17,7 @@ def input_parameters():
 
 def main():
     figure = input_parameters()
+    print(f'{figure.getName()}')
     if figure:
         print(figure.get_info())
 

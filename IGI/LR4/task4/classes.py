@@ -17,8 +17,12 @@ class Color:
     @color.setter
     def color(self, value):
         self._color = value
+    
+class Mixin():
+    def getName(self):
+        print(str(type(self).__name__))
 
-class Rectangle(GeometricFigure):
+class Rectangle(GeometricFigure, Mixin):
     def __init__(self, width, height, color):
         self.width = width
         self.height = height
@@ -30,7 +34,7 @@ class Rectangle(GeometricFigure):
     def get_info(self):
         return f"Rectangle {self.color.color} with width {self.width}, height {self.height}, and area {self.calculate_area()}"
 
-class Pentagon(GeometricFigure):
+class Pentagon(GeometricFigure, Mixin):
     def __init__(self, side_length, color):
         super().__init__()
         self.side_length = side_length

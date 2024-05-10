@@ -1,7 +1,9 @@
 num_sentences: 10
-num_narrative: 9
-avg_sentence_length: 4.684931506849315
-avg_word_length: 4.684931506849315
+normal_sentences: 7
+exclamation_sentences: 1
+question_sentences: 1
+avg_sentence_length: 34
+avg_word_length: 5
 num_smiles: 1
 short_words: ['This', 'is', 'a', 'text', 'for', 'It', 'Some', 'end', 'with', 'a', 'with', 'a', 'mark', 'are', 'also', 'The', 'of', 'a', 'is', '10', 'in', 'this', 'text', 'have', 'and', 'long', 'ones', 'can', 'be', 'in', 'like', 'or', 'D', 'for', 'This', 'text', 'also', 'like', 'WhAt', 'tHe', 'HeLl']
 modified_text: This is a sample text for testing purposes.
@@ -14,4 +16,4 @@ This text also includes repeated words like testing, testing, testing.
 Wh_?_At t_?_He He_?_Ll
 even_length_words: ['This', 'is', 'sample', 'text', 'purposes', 'It', 'contains', 'multiple', 'Some', 'with', 'period', 'Others', 'with', 'question', 'mark', 'also', 'imperative', 'length', 'of', 'sentence', 'is', '10', 'in', 'this', 'text', 'have', 'long', 'ones', 'Smiles', 'be', 'in', 'like', 'or', 'This', 'text', 'also', 'includes', 'repeated', 'like', 'WhAt', 'HeLl']
 shortest_a_word: a
-repeated_words: {'sentences', 'for', 'is', 'with', 'in', 'text', 'testing', 'words', 'like', 'also', 'This', 'a'}
+repeated_words: {'This', 'text', 'a', 'words', 'for', 'testing', 'is', 'also', 'in', 'sentences', 'like', 'with'}

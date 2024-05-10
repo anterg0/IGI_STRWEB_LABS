@@ -3,7 +3,6 @@ import pickle
 from classes import MusicApplicant
 
 class FileHandler:
-    @staticmethod
     def save_to_csv(data, filename):
         with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
@@ -11,7 +10,6 @@ class FileHandler:
             for item in data:
                 writer.writerow([item.name, item.instrument, getattr(item, 'music_genre', '')])
 
-    @staticmethod
     def load_from_csv(filename):
         data = []
         with open(filename, 'r', newline='') as file:
@@ -22,12 +20,10 @@ class FileHandler:
                 data.append(MusicApplicant(name, instrument, genre))
         return data
 
-    @staticmethod
     def save_to_pickle(data, filename):
         with open(filename, 'wb') as file:
             pickle.dump(data, file)
 
-    @staticmethod
     def load_from_pickle(filename):
         with open(filename, 'rb') as file:
             data = pickle.load(file)

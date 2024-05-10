@@ -6,17 +6,23 @@ def analyze_text(text):
     num_sentences = len(sentences)
 
     # Количество предложений каждого вида отдельно
-    narrative_sentences = re.findall(r'[^.!?]+[.!?]', text)
-    num_narrative = len(narrative_sentences)
+    normal_sentences = len(re.findall(r'[^.!?]+[.]', text))
+    exclamation_sentences = len(re.findall(r'[^.!?]+[!]', text))
+    question_sentences = len(re.findall(r'[^.!?]+[?]', text))
 
     # Средняя длина предложения в символах (только слова)
     words = re.findall(r'\b\w+\b', text)
-    sentence_lengths = [len(word) for word in words]
-    avg_sentence_length = sum(sentence_lengths) / len(sentence_lengths)
+    sentence_lengths = []
+    for sentence in sentences:
+        words2 = re.findall(r'\b\w+\b', sentence) 
+        words_len = [len(word) for word in words2]
+        words_sum = sum(words_len)
+        sentence_lengths.append(words_sum)
+    avg_sentence_length = round(sum(sentence_lengths) / len(sentence_lengths))
 
     # Средняя длина слова в тексте в символах
     word_lengths = [len(word) for word in words]
-    avg_word_length = sum(word_lengths) / len(word_lengths)
+    avg_word_length = round(sum(word_lengths) / len(word_lengths))
 
     # Количество смайликов в тексте
     smiles = re.findall(r'[:;]-*[\(\[\)\]]+', text)
@@ -24,7 +30,7 @@ def analyze_text(text):
 
     # Список всех слов текста длиной менее 5 символов
     short_words = re.findall(r'\b\w{1,4}\b', text)
-
+    
     # Выделение пар символов малая/большая латинская буква знаками «_?_»
     modified_text = re.sub(r'([a-z])([A-Z])', r'\1_?_\2', text)
 
@@ -39,7 +45,9 @@ def analyze_text(text):
 
     return {
         'num_sentences': num_sentences,
-        'num_narrative': num_narrative,
+        'normal_sentences': normal_sentences,
+        'exclamation_sentences': exclamation_sentences,
+        'question_sentences': question_sentences,
         'avg_sentence_length': avg_sentence_length,
         'avg_word_length': avg_word_length,
         'num_smiles': num_smiles,
