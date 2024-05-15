@@ -1,4 +1,6 @@
 from classes import Rectangle, Pentagon
+import matplotlib as plt
+from matplotlib.patches import Polygon
 
 def input_parameters():
     shape = input("Enter shape (rectangle or pentagon): ")
@@ -20,6 +22,8 @@ def main():
     print(f'{figure.getName()}')
     if figure:
         print(figure.get_info())
+        figure.draw()
+    
 
 if __name__ == "__main__":
     main()

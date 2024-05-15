@@ -14,5 +14,10 @@ def write_results_to_file(filename, results):
 def archive_results(filename):
     with zipfile.ZipFile('results.zip', 'w') as zipf:
         zipf.write(filename)
+        print('These files were successfully archived:')
+        for file in zipf.namelist():
+            print(f'File name: {zipf.getinfo(file).filename}')
+            print(f'Compressed size: {zipf.getinfo(file).compress_size}')
+            print(f'Uncompressed size: {zipf.getinfo(file).file_size}')
 
     os.remove(filename)

@@ -42,7 +42,7 @@ class SequenceAnalyzer:
         math_values = [math.log(1 + self.x)] * self.n
 
         plt.plot(x_values[1:], y_values[1:], label="Approximation Series")
-        plt.plot(x_values[1:], math_values[1:], label="Math Function")  
+        plt.plot(x_values[1:], math_values[1:], label="Math Function")
         plt.xlabel("Number of Terms (n)")
         plt.ylabel("Function Value")
         plt.legend()

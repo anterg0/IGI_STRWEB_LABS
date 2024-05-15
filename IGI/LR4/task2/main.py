@@ -8,7 +8,7 @@ def main():
     text = read_text_from_file(source_filename)
     results = analyze_text(text)
     write_results_to_file(output_filename, results)
-    archive_results(output_filename)
+    info = archive_results(output_filename)
 
     print("Analysis and archiving completed successfully.")
 
