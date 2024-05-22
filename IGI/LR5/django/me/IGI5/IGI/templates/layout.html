@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <sidebar>
+        <h3>Навигация по сайту</h3>
+        <ul>
+            <a href="{% url 'home' %}">
+                <li>Главная</li>
+            </a>
+            <a href="">
+                <li>FAQ</li>
+            </a>
+            <a href="{% url 'about' %}">
+                <li>О нас</li>
+            </a>
+        </ul>
+    </sidebar>
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+</body>
+</html>
