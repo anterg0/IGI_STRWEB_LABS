@@ -6,5 +6,15 @@
 {% block main %}
     <div class="features">
         <h2>Здесь будет страница с часто задаваемыми вопросами</h2>
+        {% for el in faqs %}
+            <faqContainer>
+                <span class="question">
+                    Q: {{ el.question }}
+                </span>
+                <span class="answer">
+                    A: {{ el.answer }}
+                </span>
+            </faqContainer>
+        {% endfor %}
     </div>
 {% endblock %}

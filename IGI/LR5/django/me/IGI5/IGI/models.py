@@ -63,3 +63,12 @@ class Sales(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+class FAQModel(models.Model):
+    question = models.TextField('Вопрос')
+    answer = models.TextField('Ответ на вопрос')
+    def __str__(self):
+        return self.question
+    class Meta:
+        verbose_name = 'Вопрос-ответ'
+        verbose_name_plural = 'Вопросы-ответы'

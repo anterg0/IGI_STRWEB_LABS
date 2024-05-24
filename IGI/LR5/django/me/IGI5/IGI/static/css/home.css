@@ -40,6 +40,27 @@ sidebar h3 {
 
 main .features {
     text-align: center;
-    position: relative;
     padding: 20px;
+    justify-content: center;
+}
+
+faqContainer {
+    margin: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    text-align: left;
+    padding: 10px;
+}
+  
+faqContainer .answer {
+    border-top: 2px solid gray;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+faqContainer .question {
+    font-size: 25px;
+    font-style: italic;
 }

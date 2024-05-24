@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import FAQModel
 
 # Create your views here.
 def home(request):
@@ -6,4 +7,7 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 def faq(request):
-    return render(request, 'faq.html')
+    data = {
+        'faqs': FAQModel.objects.all()
+    }
+    return render(request, 'faq.html', data)
