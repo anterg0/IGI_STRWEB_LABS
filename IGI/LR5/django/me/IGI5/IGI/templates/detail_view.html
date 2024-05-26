@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}Статья{% endblock %}
+
+{% block main %}
+    <div class="article-container">
+        <h1 class="article-title">{{ article.title }}</h1>
+        <p class="article-date">{{ article.date }}</p>
+        <div class="article-content">
+            {{ article.full_text }}
+        </div>
+    </div>
+{% endblock %}

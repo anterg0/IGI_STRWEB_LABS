@@ -24,5 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('about', views.about, name='about'),
-    path('faq', views.faq, name='faq')
+    path('faq', views.faq, name='faq'),
+    path('codeofcond', views.coc, name='code'),
+    path('news', views.news, name='news'),
+    path('news/<int:pk>', views.NewsDetailView.as_view(), name='news-detail'),
+    path('create_article', views.create_article, name='create-article')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,5 +1,22 @@
 from django.db import models
 from django.core.validators import RegexValidator
+import re
+
+class Article(models.Model):
+    title = models.CharField('Название статьи', max_length=500)
+    full_text = models.TextField('Текст статьи')
+    first_sentence = models.CharField('Первое предложение', max_length=500, null=True, blank=True)
+    date = models.DateField('Дата статьи')
+    def __str__(self):
+        return self.title
+    def save(self, *args, **kwargs):
+        if not self.first_sentence:
+            first_sentence = re.split(r'(?<=[.!?])\s+', self.full_text.strip())[0]
+            self.first_sentence = first_sentence[:500]
+        super(Article, self).save(*args, **kwargs)
+    class Meta:
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
 
 class ProductType(models.Model):
     type_name = models.CharField('Название вида',max_length=100)
