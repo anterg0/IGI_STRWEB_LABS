@@ -55,7 +55,7 @@ class Product(models.Model):
         verbose_name_plural = 'Продукты'
 
 class Client(models.Model):
-    code = models.CharField('Код клиента',max_length=100)
+    # code = models.CharField('Код клиента',max_length=100)
     name = models.CharField('Наименование клиента',max_length=100)
     phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Phone number must be entered in the format: '+375XXXXXXXXX'.")
     phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True) # validators should be a list

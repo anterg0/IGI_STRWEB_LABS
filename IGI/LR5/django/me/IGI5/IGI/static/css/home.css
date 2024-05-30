@@ -41,7 +41,9 @@ sidebar h3 {
 main .features {
     text-align: center;
     padding: 20px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 faqContainer {
@@ -69,7 +71,7 @@ faqContainer .question {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: ;
+    margin: auto;
 }
 
 .news-item {
@@ -153,4 +155,48 @@ faqContainer .question {
     margin-bottom: 10px;
     height: 30px;
     font-size: 20px;
+}
+
+.user-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+.user-link {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-link:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.user-link:active {
+    background-color: #777; 
+}
+
+.user-link:not(:last-child) {
+    margin-right: 10px;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
 }
