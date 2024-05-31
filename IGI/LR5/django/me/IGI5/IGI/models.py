@@ -1,10 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import RegexValidator
 import re
-
-class Sales(models.Model):
-    pass
 
 class Article(models.Model):
     title = models.CharField('Название статьи', max_length=500)
@@ -65,12 +61,11 @@ class Product(models.Model):
 class Client(models.Model):
     # code = models.CharField('Код клиента',max_length=100)
     name = models.CharField('Наименование клиента',max_length=100)
-    phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Phone number must be entered in the format: '+375XXXXXXXXX'.")
+    phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Номер телефона должен быть в формате: '+375XXXXXXXXX'.")
     phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     city = models.CharField('Город',max_length=100)
     address = models.TextField('Адрес')
     is_employee = models.BooleanField('Является ли сотрудником', default=False)
-    sales = models.ManyToManyField(Sales, related_name='client', verbose_name='Заказы')
 
     def __str__(self):
         return self.name
@@ -91,6 +86,17 @@ class Sales(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
+class PromoCode(models.Model):
+    name = models.CharField('Название промокода', max_length=30)
+    discount_validator = RegexValidator(regex=r'^1|0\.\d{2}$', message="Скидка должна быть введена в формате: 1 или 0.XX")
+    discount = models.DecimalField('Скидка', validators=[discount_validator], max_digits=4, decimal_places=2)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Промокод'
+        verbose_name_plural = 'Промокоды'
 class FAQModel(models.Model):
     question = models.TextField('Вопрос')
     answer = models.TextField('Ответ на вопрос')
@@ -99,17 +105,3 @@ class FAQModel(models.Model):
     class Meta:
         verbose_name = 'Вопрос-ответ'
         verbose_name_plural = 'Вопросы-ответы'
-
-class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField('email address', unique=True)
-    first_name = models.CharField('first name', max_length=30, blank=True)
-    last_name = models.CharField('last name', max_length=30, blank=True)
-    is_staff = models.BooleanField('staff status', default=False)
-    is_active = models.BooleanField('active', default=True)
-    client = models.OneToOneField(Client, on_delete=models.CASCADE, null=True, blank=True)
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-    def __str__(self):
-        return self.email

@@ -34,5 +34,6 @@ urlpatterns = [
     path('login', views.login_view, name='login'),
     path('logout', views.logout_view, name='logout'),
     path('api', views.api_view, name='api'),
-    path('profile', views.profile, name='profile')
+    path('profile', views.profile, name='profile'),
+    path('promos', views.promo_view, name='promocodes')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

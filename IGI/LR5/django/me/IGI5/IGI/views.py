@@ -4,12 +4,17 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .models import FAQModel, Article
+from .models import FAQModel, Article, PromoCode
 from .forms import ArticleForm
+import requests
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    news = Article.objects.order_by('-date').first()
+    data = {
+        'news': news
+    }
+    return render(request, 'home.html', data)
 
 def about(request):
     return render(request, 'about.html')
@@ -85,3 +90,40 @@ def api_view(request):
 @login_required
 def profile(request):
     return render(request, 'profile.html')
+
+def promo_view(request):
+    promos = PromoCode.objects.all()
+    data = {
+        'promocodes': promos
+    }
+    for el in data['promocodes']:
+        el.discount *= 100
+    return render(request, 'promo.html', data)
+
+def api_view(request):
+    fact = {
+        'fact': "Couldn't get the cat fact"
+    }
+    joke = {
+        'setup': 'No',
+        'punchline': 'jokes for you'
+    }
+    response = ''
+    try:
+        response = requests.get('https://catfact.ninja/fact')
+        if response.status_code == 200:
+            fact = response.json()
+    except:
+        pass
+    try:
+        response = requests.get('https://official-joke-api.appspot.com/random_joke')
+        if response.status_code == 200:
+            joke = response.json()
+    except:
+        pass
+
+    data = {
+        'fact': fact,
+        'joke': joke
+    }
+    return render(request, 'api.html', data)

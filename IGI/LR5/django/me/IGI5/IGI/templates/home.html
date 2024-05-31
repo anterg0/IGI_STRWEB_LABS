@@ -5,6 +5,14 @@
 {% block main %}
     <div class="features">
         <h1>Welcome to my Django Page</h1>
-        <p>This is the main content of the page.</p>
+        {% if news %}
+            <div class="news-item">
+                <h2 class="news-title">{{ news.title }}</h2>
+                <p class="news-excerpt">{{ news.first_sentence }}</p>
+                <a href="{% url 'news-detail' news.id %}" class="blue-button">Читать далее</a>
+            </div>
+        {% else %}
+            <h1 class="no-news">Нет ни одной новости</h1>
+        {% endif %}
     </div>
 {% endblock %}
