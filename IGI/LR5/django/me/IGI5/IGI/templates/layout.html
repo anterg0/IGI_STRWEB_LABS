@@ -9,7 +9,7 @@
     <sidebar>
             <div class="user-div">
                 {% if user.is_authenticated %}
-                    <a href="#" class="user-link">Личный кабинет</a>
+                    <a href="{% url 'profile' %}" class="user-link">Личный кабинет</a>
                     <a href="{% url 'logout' %}" class="user-link">Выйти</a>
                 {% else %}
                     <a href="{% url 'login' %}" class="user-link">Войти</a>
@@ -25,6 +25,9 @@
             </a>
             <a href="{% url 'faq' %}">
                 <li>FAQ</li>
+            </a>
+            <a href="{% url 'api' %}">
+                <li>API</li>
             </a>
             <a href="{% url 'about' %}">
                 <li>О нас</li>

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}Статья{% endblock %}
+{% block title %}{{ article.title }}{% endblock %}
 
 {% block main %}
     <div class="article-container">
@@ -10,4 +10,13 @@
             {{ article.full_text }}
         </div>
     </div>
+{% endblock %}
+
+
+{% block sidebar-bottom %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'news-edit' article.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: #ffc107;">Редактировать</a>
+        <a href="{% url 'news-delete' article.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: red;">Удалить</a>
+    {% else %}
+    {% endif %}
 {% endblock %}

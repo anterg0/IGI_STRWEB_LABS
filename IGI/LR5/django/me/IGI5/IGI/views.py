@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth import logout, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import FAQModel, Article
 from .forms import ArticleForm
 
@@ -66,3 +68,20 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+class NewsUpdateView(LoginRequiredMixin, UpdateView):
+    model = Article
+    template_name = 'create_article.html'
+    form_class = ArticleForm
+
+class NewsDeleteView(LoginRequiredMixin, DeleteView):
+    model = Article
+    template_name = 'news_delete.html'
+    success_url = '/news'
+
+def api_view(request):
+    return render(request, 'api.html')
+
+@login_required
+def profile(request):
+    return render(request, 'profile.html')

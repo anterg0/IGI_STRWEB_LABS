@@ -1,6 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import RegexValidator
 import re
+
+class Sales(models.Model):
+    pass
 
 class Article(models.Model):
     title = models.CharField('Название статьи', max_length=500)
@@ -14,6 +18,10 @@ class Article(models.Model):
             first_sentence = re.split(r'(?<=[.!?])\s+', self.full_text.strip())[0]
             self.first_sentence = first_sentence[:500]
         super(Article, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return f'/news/{self.id}'
+    
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
@@ -61,6 +69,8 @@ class Client(models.Model):
     phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True) # validators should be a list
     city = models.CharField('Город',max_length=100)
     address = models.TextField('Адрес')
+    is_employee = models.BooleanField('Является ли сотрудником', default=False)
+    sales = models.ManyToManyField(Sales, related_name='client', verbose_name='Заказы')
 
     def __str__(self):
         return self.name
@@ -89,3 +99,17 @@ class FAQModel(models.Model):
     class Meta:
         verbose_name = 'Вопрос-ответ'
         verbose_name_plural = 'Вопросы-ответы'
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField('email address', unique=True)
+    first_name = models.CharField('first name', max_length=30, blank=True)
+    last_name = models.CharField('last name', max_length=30, blank=True)
+    is_staff = models.BooleanField('staff status', default=False)
+    is_active = models.BooleanField('active', default=True)
+    client = models.OneToOneField(Client, on_delete=models.CASCADE, null=True, blank=True)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    def __str__(self):
+        return self.email

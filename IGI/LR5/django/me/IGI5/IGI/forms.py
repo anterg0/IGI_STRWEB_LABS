@@ -1,5 +1,5 @@
 from .models import Article
-from django.forms import ModelForm, TextInput, DateInput
+from django.forms import ModelForm, TextInput, DateInput, Textarea
 
 class ArticleForm(ModelForm):
     class Meta:
@@ -11,8 +11,8 @@ class ArticleForm(ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Название статьи',
             }),
-            'full_text': TextInput(attrs={
-                'class': 'form-control',
+            'full_text': Textarea(attrs={
+                'class': 'full_text',
                 'placeholder': 'Текст статьи',
             }),
             'date': DateInput(attrs={

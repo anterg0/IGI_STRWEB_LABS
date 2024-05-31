@@ -71,6 +71,8 @@ faqContainer .question {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin: auto;
 }
 
@@ -155,6 +157,11 @@ faqContainer .question {
     margin-bottom: 10px;
     height: 30px;
     font-size: 20px;
+}
+
+.full_text {
+    width: 700px;
+    height: 400px;
 }
 
 .user-div {

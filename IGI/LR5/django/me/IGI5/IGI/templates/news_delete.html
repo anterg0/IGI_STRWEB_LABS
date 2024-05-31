@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}Удаление новости{% endblock %}
+
+{% block main %}
+    <div class="create-form">
+        <h1>Удаление новости: "{{ article.title }}"</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="blue-button" style="background-color: red;">Удалить новость</button>
+            {{ error }}
+        </form>
+    </div>
+{% endblock %}
