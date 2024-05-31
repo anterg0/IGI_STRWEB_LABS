@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .models import FAQModel, Article, PromoCode
-from .forms import ArticleForm
+from django.utils.decorators import method_decorator
+from .models import FAQModel, Article, PromoCode, Job
+from .forms import ArticleForm, CustomUserCreationForm, JobForm
 import requests
+from .decorators import is_employee_or_superuser, is_auth
 
 # Create your views here.
 def home(request):
@@ -39,6 +40,7 @@ class NewsDetailView(DetailView):
     template_name = 'detail_view.html'
     context_object_name = 'article'
 
+@is_employee_or_superuser
 def create_article(request):
     error = ''
     if request.method == 'POST':
@@ -56,6 +58,8 @@ def create_article(request):
     return render(request, 'create_article.html', data)
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     error = ''
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -74,12 +78,14 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-class NewsUpdateView(LoginRequiredMixin, UpdateView):
+@method_decorator(is_employee_or_superuser, name='dispatch')
+class NewsUpdateView(UpdateView):
     model = Article
     template_name = 'create_article.html'
     form_class = ArticleForm
 
-class NewsDeleteView(LoginRequiredMixin, DeleteView):
+@method_decorator(is_employee_or_superuser, name='dispatch')
+class NewsDeleteView(DeleteView):
     model = Article
     template_name = 'news_delete.html'
     success_url = '/news'
@@ -127,3 +133,36 @@ def api_view(request):
         'joke': joke
     }
     return render(request, 'api.html', data)
+
+def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = CustomUserCreationForm()
+    data = {
+        'form': form
+    }
+    return render(request, 'register.html', data)
+
+def jobs(request):
+    jobs = Job.objects.all()
+    data = {
+        'jobs': jobs
+    }
+    return render(request, 'jobs.html', data)
+
+@is_employee_or_superuser
+def create_job(request):
+    if request.method == 'POST':
+        form = JobForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('jobs')
+    else:
+        form = JobForm()
+    return render(request, 'jobs_create.html', {'form': form})

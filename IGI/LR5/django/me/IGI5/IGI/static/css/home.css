@@ -207,3 +207,15 @@ faqContainer .question {
 .form-group {
     margin-bottom: 15px;
 }
+
+jobContainer {
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+jobContainer h3 {
+    border-top: 2px solid black;
+}

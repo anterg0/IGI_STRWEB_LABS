@@ -13,6 +13,7 @@
                     <a href="{% url 'logout' %}" class="user-link">Выйти</a>
                 {% else %}
                     <a href="{% url 'login' %}" class="user-link">Войти</a>
+                    <a href="{% url 'register' %}" class="user-link">Регистрация</a>
                 {% endif %}
             </div>
         <h3>Навигация по сайту</h3>
@@ -31,6 +32,9 @@
             </a>
             <a href="{% url 'promocodes' %}">
                 <li>Промокоды</li>
+            </a>
+            <a href="{% url 'jobs' %}">
+                <li>Вакансии</li>
             </a>
             <a href="{% url 'about' %}">
                 <li>О нас</li>

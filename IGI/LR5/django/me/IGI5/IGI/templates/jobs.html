@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}Вакансии{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Список вакансий</h1>
+        {% if jobs %}
+            {% for el in jobs %}
+            <jobContainer>
+                <h2>{{ el.job_name }}</h2>
+                <h3>{{ el.description }}</h3>
+            </jobContainer>
+            {% endfor %}
+        {% else %}
+            <h2>Вакансии на данный момент отсутствуют.</h2>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar-bottom %}
+    {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+        <a href="{% url 'job-create' %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease;">Создать вакансию</a>
+    {% else %}
+    {% endif %}
+{% endblock %}

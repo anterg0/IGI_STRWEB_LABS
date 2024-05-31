@@ -19,5 +19,8 @@
 {% endblock %}
 
 {% block sidebar-bottom %}
-    <a href="{% url 'create-article' %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease;">Создать новость</a>
+    {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+        <a href="{% url 'create-article' %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease;">Создать новость</a>
+    {% else %}
+    {% endif %}
 {% endblock %}
