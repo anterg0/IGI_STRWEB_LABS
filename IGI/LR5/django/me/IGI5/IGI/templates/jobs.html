@@ -10,7 +10,7 @@
             {% for el in jobs %}
             <jobContainer>
                 <h2>{{ el.job_name }}</h2>
-                <h3>{{ el.description }}</h3>
+                <a href="{% url 'job-view' el.id %}" class="blue-button">Просмотреть</a>
             </jobContainer>
             {% endfor %}
         {% else %}

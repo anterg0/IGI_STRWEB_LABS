@@ -4,8 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import FAQModel, Article, PromoCode, Job
-from .forms import ArticleForm, CustomUserCreationForm, JobForm
+from .models import FAQModel, Article, PromoCode, Job, Product, User
+from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm
 import requests
 from .decorators import is_employee_or_superuser, is_auth
 
@@ -87,7 +87,7 @@ class NewsUpdateView(UpdateView):
 @method_decorator(is_employee_or_superuser, name='dispatch')
 class NewsDeleteView(DeleteView):
     model = Article
-    template_name = 'news_delete.html'
+    template_name = 'delete_element.html'
     success_url = '/news'
 
 def api_view(request):
@@ -166,3 +166,48 @@ def create_job(request):
     else:
         form = JobForm()
     return render(request, 'jobs_create.html', {'form': form})
+
+
+class JobDetailView(DetailView):
+    model = Job
+    template_name = 'detail_view.html'
+    context_object_name = 'job'
+
+@method_decorator(is_employee_or_superuser, name='dispatch')
+class JobDeleteView(DeleteView):
+    model = Job
+    template_name = 'delete_element.html'
+    success_url = '/jobs'
+
+@method_decorator(is_employee_or_superuser, name='dispatch')
+class JobUpdateView(UpdateView):
+    model = Job
+    template_name = 'jobs_create.html'
+    form_class = JobForm
+
+def goods(request):
+    goods = Product.objects.all()
+    sort_order = request.GET.get('sort_order', 'asc')
+    if sort_order == 'asc':
+        goods = Product.objects.order_by('price')
+    else:
+        goods = Product.objects.order_by('-price')
+    return render(request, 'goods.html', {'goods': goods})
+
+def create_goods(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('goods')
+    else:
+        form = ProductForm()
+    return render(request, 'goods_create.html', {'form': form})
+
+@is_employee_or_superuser
+def all_customers(request):
+    customers = User.objects.order_by('city').filter(is_employee=False, is_superuser=False)
+    data = {
+        'customers': customers
+    }
+    return render(request, 'customers.html', data)

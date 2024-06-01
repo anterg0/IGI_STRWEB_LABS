@@ -24,6 +24,9 @@
             <a href="{% url 'news' %}">
                 <li>Новости</li>
             </a>
+            <a href="{% url 'goods' %}">
+                <li>Товары</li>
+            </a>
             <a href="{% url 'faq' %}">
                 <li>FAQ</li>
             </a>
@@ -45,6 +48,18 @@
             {% block sidebar-bottom%}
             {% endblock %}
         </ul>
+        {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+            <h3>Спец панель</h3>
+            <ul>
+                <a href="{% url 'customers' %}">
+                    <li>Заказчики</li>
+                </a>
+                <a href="">
+                    <li>Заказы</li>
+                </a>
+            </ul>
+        {% else %}
+        {% endif %}
     </sidebar>
     <main>
         {% block main %}
