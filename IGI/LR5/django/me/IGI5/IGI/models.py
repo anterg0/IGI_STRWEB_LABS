@@ -47,33 +47,20 @@ class Product(models.Model):
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
 
-class Client(models.Model):
-    # code = models.CharField('Код клиента',max_length=100)
-    name = models.CharField('Наименование клиента',max_length=100)
-    phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Номер телефона должен быть в формате: '+375XXXXXXXXX'.")
-    phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True)
-    city = models.CharField('Город',max_length=100)
-    address = models.TextField('Адрес')
-    is_employee = models.BooleanField('Является ли сотрудником', default=False)
+# class Client(models.Model):
+#     # code = models.CharField('Код клиента',max_length=100)
+#     name = models.CharField('Наименование клиента',max_length=100)
+#     phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Номер телефона должен быть в формате: '+375XXXXXXXXX'.")
+#     phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True)
+#     city = models.CharField('Город',max_length=100)
+#     address = models.TextField('Адрес')
+#     is_employee = models.BooleanField('Является ли сотрудником', default=False)
 
-    def __str__(self):
-        return self.name
-    class Meta:
-        verbose_name = 'Клиент'
-        verbose_name_plural = 'Клиенты'
-
-class Sales(models.Model):
-    date_of_order = models.DateField('Дата заказа')
-    date_of_fulfillment = models.DateField('Дата выполнения')
-    client_company = models.ForeignKey(Client, on_delete=models.CASCADE, verbose_name='Клиент заказчик')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Наименование продукта')
-    quantity = models.IntegerField('Количество продукта')
-
-    def __str__(self):
-        return f"Sale {self.id} - {self.product.name}"
-    class Meta:
-        verbose_name = 'Заказ'
-        verbose_name_plural = 'Заказы'
+#     def __str__(self):
+#         return self.name
+#     class Meta:
+#         verbose_name = 'Клиент'
+#         verbose_name_plural = 'Клиенты'
 
 class PromoCode(models.Model):
     name = models.CharField('Название промокода', max_length=30)
@@ -98,14 +85,15 @@ class FAQModel(models.Model):
 class User(AbstractUser):
     is_employee = models.BooleanField('Сотрудник?', default=False)
     phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Номер телефона должен быть в формате: '+375XXXXXXXXX'.")
-    phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True)
-    city = models.CharField('Город',max_length=100)
+    phone = models.CharField('Номер телефона', validators=[phone_regex], max_length=17, blank=True)
+    city = models.CharField('Город', max_length=100)
     address = models.TextField('Адрес')
     date_of_birth = models.DateField('Дата рождения', blank=True, null=True)
+
     @property
     def age(self):
         if self.date_of_birth:
-            today = date.today ()
+            today = date.today()
             age = today.year - self.date_of_birth.year
             if today.month < self.date_of_birth.month or (
                     today.month == self.date_of_birth.month and today.day < self.date_of_birth.day):
@@ -115,6 +103,21 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+class Sales(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', default=None, blank=True)
+    date_of_order = models.DateField('Дата заказа')
+    date_of_fulfillment = models.DateField('Дата выполнения', blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Наименование продукта', blank=True)
+    quantity = models.IntegerField('Количество продукта')
+    promo_code = models.CharField('Промокод', blank=True, null=True, max_length=50)
+
+    def __str__(self):
+        return f"Sale {self.id} - {self.product.name}"
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
 class Job(models.Model):
     job_name = models.CharField('Название вакансии', max_length=100)

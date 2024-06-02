@@ -5,5 +5,21 @@
 {% block main %}
     <div class="features">
         <h1>Здравствуйте, {{ user.username }}</h1>
+        <h2>Мои заказы</h2>
+        {% if orders %}
+            {% for el in orders %}
+                <div class="news-item">
+                    <p>Товар: {{ el.product }}</p>
+                    <p>Дата заказа: {{ el.date_of_order }}</p>
+                    {% if not el.promo_code %}
+                        <p>{{ el.quantity }} * {{ el.product.price }} = {{ el.total }}</p>
+                    {% else %}
+                        <p>({{ el.quantity }} * {{ el.product.price }}) + Promo Code = {{ el.total }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+        <h3>Заказов нету</h3>
+        {% endif %}
     </div>
 {% endblock %}

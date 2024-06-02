@@ -44,5 +44,6 @@ urlpatterns = [
     path('jobs/<int:pk>/edit', views.JobUpdateView.as_view(), name='job-edit'),
     path('goods', views.goods, name='goods'),
     path('goods/create', views.create_goods, name='goods-create'),
-    path('customers', views.all_customers, name='customers')
+    path('customers', views.all_customers, name='customers'),
+    path('order', views.order_create_view, name='order-create')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

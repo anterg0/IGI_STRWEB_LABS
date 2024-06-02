@@ -1,4 +1,4 @@
-from .models import Article, User, Job, Product
+from .models import Article, User, Job, Product, Sales
 from django.forms import ModelForm, TextInput, DateInput, Textarea, NumberInput
 from django.contrib.auth.forms import UserCreationForm
 
@@ -98,3 +98,8 @@ class CustomUserCreationForm(UserCreationForm):
         #         'placeholder': 'Дата рождения',
         #     }),
         # }
+
+class SaleForm(ModelForm):
+    class Meta:
+        model = Sales
+        fields = ['quantity', 'product', 'user', 'date_of_order', 'promo_code']

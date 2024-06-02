@@ -31,6 +31,7 @@
                     {% if el.manufacturing_status == 'PROD_STOP' %}Снято с производства{% endif %}
                     {% if el.manufacturing_status == 'IN_PROD' %}В производстве{% endif %}
                 </p>
+                <a href="{% url 'order-create' %}?item_id={{ el.id }}" class="blue-button" style="background-color: green;">Заказать</a>
             </div>
             {% endfor %}
         {% else %}

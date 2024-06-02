@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import FAQModel, Article, PromoCode, Job, Product, User
-from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm
+from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm, SaleForm
 import requests
 from .decorators import is_employee_or_superuser, is_auth
 
@@ -95,7 +95,16 @@ def api_view(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    orders = request.user.sales_set.all()
+    for el in orders:
+        el.total = el.quantity * el.product.price
+        if el.promo_code:
+            promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount
+            el.total *= promo_dis
+    data = {
+        'orders': orders
+    }
+    return render(request, 'profile.html', data)
 
 def promo_view(request):
     promos = PromoCode.objects.all()
@@ -211,3 +220,21 @@ def all_customers(request):
         'customers': customers
     }
     return render(request, 'customers.html', data)
+
+@login_required
+def order_create_view(request):
+    item_id = request.GET.get('item_id')
+    if not item_id:
+        return redirect('goods')
+    item = get_object_or_404(Product, id=item_id)
+    if request.method == 'POST':
+        form = SaleForm(request.POST)
+        if form.is_valid():
+            sale = form.save(commit=False)
+            sale.product = item
+            sale.user = request.user
+            sale.save()
+            return redirect('profile')
+    else:
+        form = SaleForm(initial={'product': item, 'user': request.user})
+    return render(request, 'order_create.html', {'item': item, 'form': form})
