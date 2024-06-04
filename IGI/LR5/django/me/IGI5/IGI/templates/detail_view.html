@@ -5,30 +5,41 @@
 {% block main %}
     <div class="article-container">
         {% if article %}
-        <h1 class="article-title">{{ article.title }}</h1>
-        <p class="article-date">{{ article.date }}</p>
-        <div class="article-content">
-            {{ article.full_text }}
-        </div>
+            <h1 class="article-title">{{ article.title }}</h1>
+            <p class="article-date">{{ article.date }}</p>
+            <div class="article-content">
+                {{ article.full_text }}
+            </div>
+        {% elif review %}
+            <h1 class="article-title">{{ review.user.username }}</h1>
+            <p class="article-date">Оценка: {{ review.rating }}/5</p>
+            <div class="article-content">
+                {{ review.review_text }}
+            </div>
         {% else %}
-        <h1 class="article-title">{{ job.job_name }}</h1>
-        <div class="article-content">
-            {{ job.description }}
-        </div>
+            <h1 class="article-title">{{ job.job_name }}</h1>
+            <div class="article-content">
+                {{ job.description }}
+            </div>
         {% endif %}
     </div>
 {% endblock %}
 
 
 {% block sidebar-bottom %}
-    {% if user.is_authenticated and user.is_employee or user.is_superuser %}
-        {% if job %}
-        <a href="{% url 'job-edit' job.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: #ffc107;">Редактировать</a>
-        <a href="{% url 'job-delete' job.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: red;">Удалить</a>
-        {% else %}
-        <a href="{% url 'news-edit' article.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: #ffc107;">Редактировать</a>
-        <a href="{% url 'news-delete' article.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: red;">Удалить</a>
+    {% if job or article %}
+        {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+            {% if job %}
+            <a href="{% url 'job-edit' job.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: #ffc107;">Редактировать</a>
+            <a href="{% url 'job-delete' job.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: red;">Удалить</a>
+            {% else %}
+            <a href="{% url 'news-edit' article.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: #ffc107;">Редактировать</a>
+            <a href="{% url 'news-delete' article.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: red;">Удалить</a>
+            {% endif %}
         {% endif %}
+    {% elif review and user.is_authenticated and request.user == review.user %}
+    <a href="{% url 'review-edit' review.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: #ffc107;">Редактировать</a>
+    <a href="{% url 'review-delete' review.id %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease; background-color: red;">Удалить</a>
     {% else %}
     {% endif %}
 {% endblock %}

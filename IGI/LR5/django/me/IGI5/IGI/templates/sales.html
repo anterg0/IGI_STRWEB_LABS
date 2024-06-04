@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block title %}Sales{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Обзор продаж</h1>
+
+        <div class="chart-container">
+            {{ chart|safe }}  </div>
+
+        <h2>Все заказы за последние 10 дней</h2>
+        <div class="order-list">
+            {% if orders %}
+                {% for el in orders %}
+                    <div class="order-item">
+                        <p>Заказчик: {{ el.user.username }} </p>
+                        <p>Продукт: {{ el.product.name }} </p>
+                        <p>Общая цена заказа: {{ el.total }} </p>
+                        <p>Дата заказа: {{ el.date_of_order }} </p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Заказов пока нету.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

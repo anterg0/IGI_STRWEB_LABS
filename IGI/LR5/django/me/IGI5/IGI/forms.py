@@ -1,6 +1,7 @@
-from .models import Article, User, Job, Product, Sales
+from .models import Article, User, Job, Product, Sales, Review
 from django.forms import ModelForm, TextInput, DateInput, Textarea, NumberInput
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 class ArticleForm(ModelForm):
     class Meta:
@@ -103,3 +104,23 @@ class SaleForm(ModelForm):
     class Meta:
         model = Sales
         fields = ['quantity', 'product', 'user', 'date_of_order', 'promo_code']
+
+class ReviewForm(ModelForm):
+    RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
+
+    rating = forms.ChoiceField(
+        label='Rating',
+        choices=RATING_CHOICES,
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        })
+    )
+    class Meta:
+        model = Review
+        fields = ('review_text', 'rating')
+        widgets = {
+            'review_text': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Текст отзыва',
+            }),
+        }

@@ -42,6 +42,9 @@
             <a href="{% url 'about' %}">
                 <li>О нас</li>
             </a>
+            <a href="{% url 'reviews' %}">
+                <li>Отзывы</li>
+            </a>
             <a href="{% url 'code' %}">
                 <li>Политика кофидециальности</li>
             </a>
@@ -54,7 +57,7 @@
                 <a href="{% url 'customers' %}">
                     <li>Заказчики</li>
                 </a>
-                <a href="">
+                <a href="{% url 'sales-view' %}">
                     <li>Заказы</li>
                 </a>
             </ul>

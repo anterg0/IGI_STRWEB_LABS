@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}Создание отзыва{% endblock %}
+
+{% block main %}
+    <div class="create-form">
+        <h1>Создание отзыва</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.review_text }}<br>
+            {{ form.rating }}<br>
+            <button type="submit">Оставить отзыв</button>
+            {{ error }}
+        </form>
+    </div>
+{% endblock %}

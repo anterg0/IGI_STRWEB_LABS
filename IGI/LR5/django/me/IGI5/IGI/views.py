@@ -3,11 +3,14 @@ from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.utils.decorators import method_decorator
-from .models import FAQModel, Article, PromoCode, Job, Product, User
-from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm, SaleForm
+from .models import FAQModel, Article, PromoCode, Job, Product, User, Review, Sales
+from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm, SaleForm, ReviewForm
 import requests
 from .decorators import is_employee_or_superuser, is_auth
+from datetime import timedelta
+from django.utils import timezone
 
 # Create your views here.
 def home(request):
@@ -238,3 +241,86 @@ def order_create_view(request):
     else:
         form = SaleForm(initial={'product': item, 'user': request.user})
     return render(request, 'order_create.html', {'item': item, 'form': form})
+
+def reviews_view(request):
+    reviews = Review.objects.all()
+    data = {
+        'reviews': reviews
+    }
+    return render(request, 'reviews.html', data)
+
+@login_required
+def review_create(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            try:
+                review = form.save(commit=False)
+                review.user = request.user
+                review.save()
+                return redirect('profile')
+            except:
+                messages.error(request, "Нельзя оставить больше одного отзыва")
+                return redirect('home')
+    else:
+        form = ReviewForm(initial={'user': request.user})
+    data = {
+        'form': form
+    }
+    return render(request, 'review_create.html', data)
+
+class ReviewDetailView(DetailView):
+    model = Review
+    template_name = 'detail_view.html'
+    context_object_name = 'review'
+
+
+class ReviewDeleteView(DeleteView):
+    model = Review
+    template_name = 'delete_element.html'
+    success_url = '/reviews'
+
+class ReviewUpdateView(UpdateView):
+    model = Review
+    template_name = 'review_create.html'
+    form_class = ReviewForm
+
+@is_employee_or_superuser
+def sales(request):
+    ten_days_ago = timezone.now() - timedelta(days=10)  # Calculate 10 days ago
+    
+    # Get orders from the last 10 days
+    orders = Sales.objects.filter(date_of_order__gte=ten_days_ago) 
+
+    for el in orders:
+        el.total = el.quantity * el.product.price
+        if el.promo_code:
+            promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount
+            el.total *= promo_dis
+
+    sales_data = []
+    dates = []
+    for order in orders:
+        order_date = order.date_of_order
+        if order_date in dates:
+            index = dates.index(order_date)
+            sales_data[index] += order.total
+        else:
+            dates.append(order_date)
+            sales_data.append(order.total)
+    
+    dates.sort(reverse=True)
+    sales_data = [sales_data[dates.index(date)] for date in dates]
+    import pandas as pd
+    df = pd.DataFrame({'Date': dates[-10:], 'Sales': sales_data[-10:]})
+
+    import plotly.express as px
+    fig = px.bar(df, x='Date', y='Sales', title='Общий объем продаж за 10 дней')
+    fig.update_layout(xaxis_title='Дата', yaxis_title='Прибыль')
+    chart = fig.to_html(full_html=False)
+
+    data = {
+        'orders': orders,
+        'chart': chart
+    }
+    return render(request, 'sales.html', data)

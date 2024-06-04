@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 import re
 from django.contrib.auth.models import AbstractUser
 from datetime import date
@@ -46,21 +46,6 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
-
-# class Client(models.Model):
-#     # code = models.CharField('Код клиента',max_length=100)
-#     name = models.CharField('Наименование клиента',max_length=100)
-#     phone_regex = RegexValidator(regex=r'((\+375)?(29|33|44|25)\d{7})', message="Номер телефона должен быть в формате: '+375XXXXXXXXX'.")
-#     phone = models.CharField('Номер телефона',validators=[phone_regex], max_length=17, blank=True)
-#     city = models.CharField('Город',max_length=100)
-#     address = models.TextField('Адрес')
-#     is_employee = models.BooleanField('Является ли сотрудником', default=False)
-
-#     def __str__(self):
-#         return self.name
-#     class Meta:
-#         verbose_name = 'Клиент'
-#         verbose_name_plural = 'Клиенты'
 
 class PromoCode(models.Model):
     name = models.CharField('Название промокода', max_length=30)
@@ -127,8 +112,20 @@ class Job(models.Model):
         return self.job_name
     
     def get_absolute_url(self):
-        return f'/news/{self.id}'
+        return f'/jobs/{self.id}'
     
     class Meta:
         verbose_name = 'Вакансия'
         verbose_name_plural = 'Вакансии'
+
+class Review(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    review_text = models.CharField('Текст отзыва', max_length=500)
+    rating = models.IntegerField('Оценка', validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def __str__(self):
+        return self.review_text
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
