@@ -6,11 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from .models import FAQModel, Article, PromoCode, Job, Product, User, Review, Sales
-from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm, SaleForm, ReviewForm
+from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm, SaleForm, ReviewForm, UserProfilePictureForm
 import requests
 from .decorators import is_employee_or_superuser, is_auth
 from datetime import timedelta
 from django.utils import timezone
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
@@ -50,6 +51,7 @@ def create_article(request):
         form = ArticleForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('/news')
         else:
             error = 'Данные заполнены неверно'
     form = ArticleForm()
@@ -98,6 +100,9 @@ def api_view(request):
 
 @login_required
 def profile(request):
+    user_timezone = request.session.get('django_timezone')
+    if user_timezone:
+        timezone.activate(user_timezone)
     orders = request.user.sales_set.all()
     for el in orders:
         el.total = el.quantity * el.product.price
@@ -260,7 +265,6 @@ def review_create(request):
                 review.save()
                 return redirect('profile')
             except:
-                messages.error(request, "Нельзя оставить больше одного отзыва")
                 return redirect('home')
     else:
         form = ReviewForm(initial={'user': request.user})
@@ -287,10 +291,9 @@ class ReviewUpdateView(UpdateView):
 
 @is_employee_or_superuser
 def sales(request):
-    ten_days_ago = timezone.now() - timedelta(days=10)  # Calculate 10 days ago
-    
-    # Get orders from the last 10 days
-    orders = Sales.objects.filter(date_of_order__gte=ten_days_ago) 
+    ten_days_ago = timezone.now() - timedelta(days=10)
+    all_orders = Sales.objects.all()
+    orders = Sales.objects.filter(date_of_order__gte=ten_days_ago, date_of_fulfillment__isnull=False) 
 
     for el in orders:
         el.total = el.quantity * el.product.price
@@ -321,6 +324,32 @@ def sales(request):
 
     data = {
         'orders': orders,
-        'chart': chart
+        'chart': chart,
+        'all_orders': all_orders
     }
     return render(request, 'sales.html', data)
+
+def contacts_view(request):
+    contacts = User.objects.filter(Q(is_employee=True) | Q(is_superuser=True))
+    data = {
+        'contacts': contacts
+    }
+    return render(request, 'contacts.html', data)
+
+def fulfill(request, pk):
+    order = get_object_or_404(Sales, id=pk)
+    if request.method == 'POST':
+        order.date_of_fulfillment = timezone.now()
+        order.save()
+    return redirect('/sales')    
+
+@login_required
+def update_profile_picture(request):
+    if request.method == 'POST':
+        form = UserProfilePictureForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserProfilePictureForm(instance=request.user)
+    return render(request, 'update_picture.html', {'form': form})

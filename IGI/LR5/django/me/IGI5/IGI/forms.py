@@ -124,3 +124,8 @@ class ReviewForm(ModelForm):
                 'placeholder': 'Текст отзыва',
             }),
         }
+
+class UserProfilePictureForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['profile_picture']

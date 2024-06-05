@@ -7,11 +7,11 @@
         {% if customers %}
             {% for el in customers %}
                 <div class="news-item">
-                    <p>{{ el.username }}</p>
-                    <p>{{ el.email }}</p>
-                    <p>{{ el.phone }}</p>
-                    <p>{{ el.city }}</p>
-                    <p>{{ el.address }}</p>
+                    <p>Имя и Фамилия: {{ el.first_name }} {{ el.last_name }}</p>
+                    <p>Эл. почта: {{ el.email }}</p>
+                    <p>Номер телефона: {{ el.phone }}</p>
+                    <p>Город: {{ el.city }}</p>
+                    <p>Адрес: {{ el.address }}</p>
                 </div>
             {% endfor %}
         {% else %}

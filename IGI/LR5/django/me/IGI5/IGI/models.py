@@ -74,6 +74,7 @@ class User(AbstractUser):
     city = models.CharField('Город', max_length=100)
     address = models.TextField('Адрес')
     date_of_birth = models.DateField('Дата рождения', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
 
     @property
     def age(self):
