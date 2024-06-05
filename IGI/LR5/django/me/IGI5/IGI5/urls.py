@@ -55,4 +55,5 @@ urlpatterns = [
     path('contacts', views.contacts_view, name='contacts-view'),
     path('fulfill_order/<int:pk>', views.fulfill, name='fulfill-order'),
     path('profile_picture', views.update_profile_picture, name='update-picture')
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

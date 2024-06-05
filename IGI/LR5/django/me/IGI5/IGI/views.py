@@ -48,7 +48,7 @@ class NewsDetailView(DetailView):
 def create_article(request):
     error = ''
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect('/news')
@@ -296,6 +296,12 @@ def sales(request):
     orders = Sales.objects.filter(date_of_order__gte=ten_days_ago, date_of_fulfillment__isnull=False) 
 
     for el in orders:
+        el.total = el.quantity * el.product.price
+        if el.promo_code:
+            promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount
+            el.total *= promo_dis
+
+    for el in all_orders:
         el.total = el.quantity * el.product.price
         if el.promo_code:
             promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount

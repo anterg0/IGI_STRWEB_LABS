@@ -9,6 +9,7 @@ class Article(models.Model):
     full_text = models.TextField('Текст статьи')
     first_sentence = models.CharField('Первое предложение', max_length=500, null=True, blank=True)
     date = models.DateField('Дата статьи')
+    picture = models.ImageField(upload_to='article_photos/', blank=True, null=True)
     def __str__(self):
         return self.title
     def save(self, update_fields=None, *args, **kwargs):

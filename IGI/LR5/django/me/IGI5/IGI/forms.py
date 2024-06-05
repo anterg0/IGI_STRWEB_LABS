@@ -6,7 +6,7 @@ from django import forms
 class ArticleForm(ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'full_text', 'date']
+        fields = ['title', 'full_text', 'date', 'picture']
 
         widgets = {
             'title': TextInput(attrs={

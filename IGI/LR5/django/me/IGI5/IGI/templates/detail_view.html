@@ -7,6 +7,9 @@
         {% if article %}
             <h1 class="article-title">{{ article.title }}</h1>
             <p class="article-date">{{ article.date }}</p>
+            {% if article.picture %}
+                <img src="{{ article.picture.url }}" width="500" >
+            {% endif %}
             <div class="article-content">
                 {{ article.full_text }}
             </div>

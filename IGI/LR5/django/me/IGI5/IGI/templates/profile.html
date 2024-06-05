@@ -5,7 +5,7 @@
 {% block main %}
     <div class="features">
         <h1>Здравствуйте, {{ user.username }}</h1>
-        <img src="{{ user.profile_picture }}">
+        <img src="{{ user.profile_picture.url }}" width="300">
         {% if request.user.age >= 18 %}
             <h2>Вы совершеннолетний пользователь (дата рождения: {{ request.user.date_of_birth }})</h2>
         {% endif %}
