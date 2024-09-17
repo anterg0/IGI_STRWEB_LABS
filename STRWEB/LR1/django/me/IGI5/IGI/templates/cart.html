@@ -2,50 +2,49 @@
 
 {% block title %}Корзина{% endblock %}
 {% load custom_filters %}
-
 {% block main %}
     <div class="cart-container">
         <h1>Корзина</h1>
 
-        {% if cart %}
-            {% if cart.cart_items.all %}
-                <form method="POST" action="{% url 'checkout' %}">
-                    {% csrf_token %}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Название</th>
-                                <th>Цена</th>
-                                <th>Количество</th>
-                                <th>Сумма</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in cart.cart_items.all %}
-                            <tr>
-                                <td>{{ item.product.name }}</td>
-                                <td>{{ item.product.price }}</td>
-                                <td>
-                                    <input type="number" name="quantities[{{ item.id }}]" value="{{ item.quantity }}" min="1">
-                                </td>
-                                <td>{{ item.total_price }}</td> <!-- Using the property here -->
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3">Общая сумма:</td>
-                                <td>{{ cart.total_price }}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <button type="submit">Заказать</button>
-                </form>
-            {% else %}
-                <p>Ваша корзина пуста.</p>
-            {% endif %}
+        {% if cart.cart_items.all %}
+            <form method="POST" action="{% url 'checkout' %}">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart.cart_items.all %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.product.price }}</td>
+                            <td>
+                                <input type="number" name="quantities[{{ item.id }}]" value="{{ item.quantity }}" min="1">
+                            </td>
+                            <td>{{ item.product.price|multiply:item.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3">Общая сумма:</td>
+                            <td>{{ cart.total_price }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="form-group">
+                    <label for="promo_code">Промокод:</label>
+                    <input type="text" id="promo_code" name="promo_code" placeholder="Введите промокод">
+                </div>
+                <button type="submit">Оформить заказ</button>
+            </form>
         {% else %}
-            <p>Корзина не найдена.</p>
+            <p>Ваша корзина пуста.</p>
         {% endif %}
     </div>
 {% endblock %}

@@ -7,30 +7,81 @@
         <h1>Обзор продаж</h1>
 
         <div class="chart-container">
-            {{ chart|safe }}  </div>
+            {{ chart|safe }}
+        </div>
 
-        <h2>Все заказы за последние 10 дней</h2>
-        <div class="order-list">
-            {% if orders %}
-                {% for el in all_orders %}
-                    <div class="order-item">
-                        <p>Заказчик: {{ el.user.first_name }} {{ el.user.last_name }} ({{ el.user.username }}) </p>
-                        <p>Продукт: {{ el.product.name }} </p>
-                        <p>Общая цена заказа: {{ el.total }} </p>
-                        <p>Дата заказа: {{ el.date_of_order }} </p>
-                        {% if el.date_of_fulfillment %}
-                            <p>Дата выполнения: {{ el.date_of_fulfillment }}</p>
-                        {% else %}
-                            <form method="post" action="{% url 'fulfill-order' el.id %}">
-                                {% csrf_token %}
-                                <button type="submit">Выполнить заказ</button>
-                            </form>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>Заказов пока нету.</p>
-            {% endif %}
+        <div class="orders">
+            <div class="order-list">
+                <h2>Заказы за 10 дней</h2>
+                {% if fulfilled_orders %}
+                    {% for order in fulfilled_orders %}
+                        <div class="order-item">
+                            <p>Заказчик: {{ order.user.first_name }} {{ order.user.last_name }} ({{ order.user.username }}) </p>
+                            <p>Продукт: {{ order.product.name }} </p>
+                            <p>Общая цена заказа: {{ order.total }} </p>
+                            <p>Дата заказа: {{ order.date_of_order }} </p>
+                            {% if order.date_of_fulfillment %}
+                                <p>Дата выполнения: {{ order.date_of_fulfillment }}</p>
+                            {% else %}
+                                <form method="post" action="{% url 'fulfill-order' order.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Выполнить заказ</button>
+                                </form>
+                            {% endif %}
+
+                            <!-- Details for the sale items -->
+                            <details>
+                                <summary>Показать детали заказа</summary>
+                                <div>
+                                    {% for item in sales_items %}
+                                        {% if item.sale == order %}
+                                            <p>Продукт: {{ item.product.name }} - Количество: {{ item.quantity }} - Цена: {{ item.product.price }} </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Заказов пока нету.</p>
+                {% endif %}
+            </div>
+
+            <div class="order-list">
+                <h2>Все заказы</h2>
+                {% if all_orders %}
+                    {% for order in all_orders %}
+                        <div class="order-item">
+                            <p>Заказчик: {{ order.user.first_name }} {{ order.user.last_name }} ({{ order.user.username }}) </p>
+                            <p>Продукт: {{ order.product.name }} </p>
+                            <p>Общая цена заказа: {{ order.total }} </p>
+                            <p>Дата заказа: {{ order.date_of_order }} </p>
+                            {% if order.date_of_fulfillment %}
+                                <p>Дата выполнения: {{ order.date_of_fulfillment }}</p>
+                            {% else %}
+                                <form method="post" action="{% url 'fulfill-order' order.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Выполнить заказ</button>
+                                </form>
+                            {% endif %}
+
+                            <!-- Details for the sale items -->
+                            <details>
+                                <summary>Показать детали заказа</summary>
+                                <div>
+                                    {% for item in sales_items %}
+                                        {% if item.sale == order %}
+                                            <p>Продукт: {{ item.product.name }} - Количество: {{ item.quantity }} - Цена: {{ item.product.price }} </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Заказов пока нету.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

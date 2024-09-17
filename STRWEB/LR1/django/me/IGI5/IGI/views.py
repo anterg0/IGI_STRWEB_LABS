@@ -13,6 +13,8 @@ from datetime import timedelta
 from django.utils import timezone
 from django.db.models import Q
 from datetime import datetime
+import pandas as pd
+import plotly.express as px
 
 # Create your views here.
 def home(request):
@@ -297,24 +299,14 @@ class ReviewUpdateView(UpdateView):
 @is_employee_or_superuser
 def sales(request):
     ten_days_ago = timezone.now() - timedelta(days=10)
+
+    fulfilled_orders = Sales.objects.filter(date_of_order__gte=ten_days_ago, date_of_fulfillment__isnull=False)
+    
     all_orders = Sales.objects.all()
-    orders = Sales.objects.filter(date_of_order__gte=ten_days_ago) 
-
-    for el in orders:
-        el.total = el.quantity * el.product.price
-        if el.promo_code:
-            promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount
-            el.total *= (1 - promo_dis)
-
-    for el in all_orders:
-        el.total = el.quantity * el.product.price
-        if el.promo_code:
-            promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount
-            el.total *= (1 - promo_dis)
 
     sales_data = []
     dates = []
-    for order in orders:
+    for order in fulfilled_orders:
         order_date = order.date_of_order
         if order_date in dates:
             index = dates.index(order_date)
@@ -325,20 +317,22 @@ def sales(request):
     
     dates.sort(reverse=True)
     sales_data = [sales_data[dates.index(date)] for date in dates]
-    import pandas as pd
+    
     df = pd.DataFrame({'Date': dates[-10:], 'Sales': sales_data[-10:]})
-
-    import plotly.express as px
-    fig = px.bar(df, x='Date', y='Sales', title='Общий объем продаж за 10 дней')
+    fig = px.bar(df, x='Date', y='Sales', title='Общий объем продаж за 10 дней (только выполненные заказы)')
     fig.update_layout(xaxis_title='Дата', yaxis_title='Прибыль')
     chart = fig.to_html(full_html=False)
 
+    sales_items = SalesItem.objects.all()
+
     data = {
-        'orders': orders,
+        'fulfilled_orders': fulfilled_orders,
+        'all_orders': all_orders,
         'chart': chart,
-        'all_orders': all_orders
+        'sales_items': sales_items
     }
     return render(request, 'sales.html', data)
+
 
 def contacts_view(request):
     contacts = User.objects.filter(Q(is_employee=True) | Q(is_superuser=True))
@@ -374,39 +368,50 @@ def cart(request):
 def checkout(request):
     if request.method == 'POST':
         cart = Cart.objects.get(user=request.user)
-        quantities = request.POST.get('quantities', {})
+        post_data = request.POST
+        print("POST data: ", post_data)
+
+        quantities = {key.split('[')[1][:-1]: value for key, value in post_data.items() if key.startswith('quantities[')}
+        print(f"Quantities from form: {quantities}")
+
+        promo_code = post_data.get('promo_code', '').strip()
 
         sale = Sales(
             user=request.user,
             date_of_order=datetime.today().strftime('%Y-%m-%d'),
-            total=0
+            promo_code=promo_code
         )
         sale.save()
 
-        total_amount = cart.total_price()
-        print(cart.total_price())
+        total_amount = 0
 
-        for item_id, quantity in quantities.items():
-            quantity = int(quantity)
-            if quantity > 0:
-                cart_item = CartItem.objects.get(id=item_id, cart=cart)
-                cart_item.quantity = quantity
-                cart_item.save()
+        if quantities:
+            for item_id, quantity in quantities.items():
+                quantity = int(quantity)
+                if quantity > 0:
+                    cart_item = CartItem.objects.get(id=item_id, cart=cart)
+                    cart_item.quantity = quantity
+                    cart_item.save()
 
-                sales_item = SalesItem(
-                    sale=sale,
-                    product=cart_item.product,
-                    quantity=quantity
-                )
-                sales_item.save()
+                    SalesItem.objects.create(
+                        sale=sale,
+                        product=cart_item.product,
+                        quantity=quantity
+                    )
+                    total_amount += cart_item.product.price * quantity
 
-                total_amount += sales_item.total_price()
+            if promo_code:
+                try:
+                    promo_dis = PromoCode.objects.get(name=promo_code).discount
+                    total_amount *= (1 - promo_dis)
+                except PromoCode.DoesNotExist:
+                    print("Invalid promo code")
 
-        sale.total = total_amount
-        sale.save()
+            sale.total = total_amount
+            sale.save()
 
-        cart.cart_items.all().delete()
-
-        return redirect('profile')
+            cart.cart_items.all().delete()
+            
+            return redirect('profile')
 
     return redirect('cart-detail')

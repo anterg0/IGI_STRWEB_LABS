@@ -8,12 +8,14 @@
         <h2>FAQ, a.k.a Часто задаваемые вопросы</h2>
         {% for el in faqs %}
             <faqContainer>
-                <span class="question">
-                    Q: {{ el.question }}
-                </span>
-                <span class="answer">
-                    A: {{ el.answer }}
-                </span>
+                <details>
+                    <summary class="question">
+                        Q: {{ el.question }}
+                    </summary>
+                    <span class="answer">
+                        A: {{ el.answer }}
+                    </span>
+                </details>
             </faqContainer>
         {% endfor %}
     </div>
