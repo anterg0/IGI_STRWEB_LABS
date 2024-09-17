@@ -404,7 +404,7 @@ def checkout(request):
         sale.total = total_amount
         sale.save()
 
-        cart.cart_items.clear()
+        cart.cart_items.all().delete()
 
         return redirect('profile')
 

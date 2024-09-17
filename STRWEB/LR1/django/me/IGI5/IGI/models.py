@@ -95,7 +95,7 @@ class Sales(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', default=None, blank=True)
     date_of_order = models.DateField('Дата заказа', blank=True, default=datetime.today().strftime('%Y-%m-%d'))
     date_of_fulfillment = models.DateField('Дата выполнения', blank=True, null=True)
-    products = models.ManyToManyField(Product, through='SalesItem')
+    products = models.ManyToManyField(Product, through='SalesItem', verbose_name="Продукты")
     promo_code = models.CharField('Промокод', blank=True, null=True, max_length=50)
     total = models.FloatField('Цена заказа', default=0)
 
