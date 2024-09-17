@@ -1,0 +1,8 @@
+This is a sample text for testing purposes.
+It contains multiple sentences. Some end with a period. Others with a question mark?
+There are also imperative sentences! 
+The average length of a sentence is about 10 words.
+Words in this text have various lengths, including short and long ones.
+Smiles can be found in texts like :) or :-D, for example.
+This text also includes repeated words like testing, testing, testing.
+WhAt tHe HeLl
