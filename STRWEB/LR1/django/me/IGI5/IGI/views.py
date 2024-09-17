@@ -5,7 +5,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.decorators import method_decorator
-from .models import FAQModel, Article, PromoCode, Job, Product, User, Review, Sales, Cart, CartItem
+from .models import FAQModel, Article, PromoCode, Job, Product, User, Review, Sales, Cart, CartItem, SalesItem
 from .forms import ArticleForm, CustomUserCreationForm, JobForm, ProductForm, SaleForm, ReviewForm, UserProfilePictureForm
 import requests
 from .decorators import is_employee_or_superuser, is_auth
@@ -368,7 +368,7 @@ def update_profile_picture(request):
 @login_required
 def cart(request):
     cart = get_object_or_404(Cart, user=request.user)
-    return render(request, 'cart.html', {'cart': cart, 'items': cart.items.all()})
+    return render(request, 'cart.html', {'cart': cart})
 
 @login_required
 def checkout(request):
@@ -383,7 +383,8 @@ def checkout(request):
         )
         sale.save()
 
-        total_amount = 0
+        total_amount = cart.total_price()
+        print(cart.total_price())
 
         for item_id, quantity in quantities.items():
             quantity = int(quantity)

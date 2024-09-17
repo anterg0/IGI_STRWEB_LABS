@@ -147,11 +147,11 @@ class Cart(models.Model):
         return f"Cart of {self.user.username}"
 
     def total_price(self):
-        return sum(item.total_price() for item in self.items.all())
+        return sum(item.total_price() for item in self.cart_items.all())
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='cart_items', on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='prod')
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
