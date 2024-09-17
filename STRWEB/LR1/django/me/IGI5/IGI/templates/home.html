@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Welcome to my Django Page</h1>
+        {% if news %}
+            <div class="news-item">
+                <img src="{{ news.picture.url }}" width="300">
+                <h2 class="news-title">{{ news.title }}</h2>
+                <p class="news-excerpt">{{ news.first_sentence }}</p>
+                <a href="{% url 'news-detail' news.id %}" class="blue-button">Читать далее</a>
+            </div>
+        {% else %}
+            <h1 class="no-news">Нет ни одной новости</h1>
+        {% endif %}
+    </div>
+{% endblock %}

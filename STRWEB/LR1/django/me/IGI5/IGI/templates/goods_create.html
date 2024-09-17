@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block title %}Создание товара{% endblock %}
+
+{% block main %}
+    <div class="create-form">
+        <h1>Создание товара</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.name }}<br>
+            {{ form.code }}<br>
+            {{ form.model }}<br>
+            {{ form.type }}<br>
+            {{ form.price }}<br>
+            {{ form.manufacturing_status }}<br>
+            <button type="submit">Создать новость</button>
+            {{ error }}
+        </form>
+    </div>
+{% endblock %}

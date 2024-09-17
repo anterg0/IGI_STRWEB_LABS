@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}API{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Сторонние API</h1>
+        <h2>Cat Fact</h2>
+        <h3>{{ fact.fact }}</h3>
+        <h2>Joke API</h2>
+        <h3>{{ joke.setup }} - {{ joke.punchline }}</h3>
+    </div>
+{% endblock %}

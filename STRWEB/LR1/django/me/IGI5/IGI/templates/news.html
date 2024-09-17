@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %}Новости{% endblock %}
+
+{% block main %}
+    <div class="news-container">
+        {% if news %}
+            {% for article in news %}
+                <div class="news-item">
+                    <h2 class="news-title">{{ article.title }}</h2>
+                    <p class="news-excerpt">{{ article.first_sentence }}</p>
+                    <a href="{% url 'news-detail' article.id %}" class="blue-button">Читать далее</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1 class="no-news">Нет ни одной новости</h1>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar-bottom %}
+    {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+        <a href="{% url 'create-article' %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease;">Создать новость</a>
+    {% else %}
+    {% endif %}
+{% endblock %}

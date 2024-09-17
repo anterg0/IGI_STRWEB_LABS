@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block title %}Товары{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Товары</h1>
+
+        <form method="GET" class="sort-form">
+            <label for="sort_order">Сортировать по цене:</label>
+            <select name="sort_order" id="sort_order">
+                <option value="asc">По возрастанию</option>
+                <option value="desc">По убыванию</option>
+            </select>
+            <button type="submit">Сортировать</button>
+        </form>
+
+        {% if goods %}
+            {% for el in goods %}
+            <div class="news-item">
+                <h3>{{ el.name }}</h3>
+                <p>Код товара: {{ el.code }}</p>
+                <p>Модель: {{ el.model }}</p>
+                <p>Тип мебели: 
+                    {% if el.type == 'kitchen' %}Кухонная{% endif %}
+                    {% if el.type == 'office' %}Офисная{% endif %}
+                    {% if el.type == 'cabinet' %}Кабинетная{% endif %}
+                </p>
+                <p>Цена: {{ el.price }}</p>
+                <p>
+                    {% if el.manufacturing_status == 'PROD_STOP' %}Снято с производства{% endif %}
+                    {% if el.manufacturing_status == 'IN_PROD' %}В производстве{% endif %}
+                </p>
+                <form method="POST" action="{% url 'cart-add' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ el.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="blue-button" style="background-color: green;">Добавить в корзину</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="font-size: 30px; font-style: italic;">Товаров нет.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block sidebar-bottom %}
+    {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+        <a href="{% url 'goods-create' %}" class="blue-button" style="margin-top: 20px; transition: transform 0.6s ease;">Создать товар</a>
+    {% endif %}
+{% endblock %}

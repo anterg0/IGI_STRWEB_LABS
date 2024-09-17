@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Здравствуйте, {{ user.username }}</h1>
+        <img src="{{ user.profile_picture.url }}" width="300">
+        {% if request.user.age >= 18 %}
+            <h2>Вы совершеннолетний пользователь (дата рождения: {{ request.user.date_of_birth }})</h2>
+        {% endif %}
+        <a href="{% url 'update-picture' %}">Добавить фото</a>
+        <!-- <h2>Мои заказы</h2>
+        {% if orders %}
+            {% for el in orders %}
+                <div class="news-item">
+                    <p>Товар: {{ el.product }}</p>
+                    <p>Дата заказа: {{ el.date_of_order }}</p>
+                    {% if not el.promo_code %}
+                        <p>{{ el.quantity }} * {{ el.product.price }} = {{ el.total }}</p>
+                    {% else %}
+                        <p>({{ el.quantity }} * {{ el.product.price }}) + Promo Code = {{ el.total }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+        <h3>Заказов нету</h3>
+        {% endif %} -->
+    </div>
+{% endblock %}

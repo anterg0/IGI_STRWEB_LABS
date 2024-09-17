@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block title %}Создание вакансии{% endblock %}
+
+{% block main %}
+    <div class="create-form">
+        <h1>Создание вакансии</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.job_name }}<br>
+            {{ form.description }}<br>
+            <button type="submit">Создать новость</button>
+            {{ error }}
+        </form>
+    </div>
+{% endblock %}
