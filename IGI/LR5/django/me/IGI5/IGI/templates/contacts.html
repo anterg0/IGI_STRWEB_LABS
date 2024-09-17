@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}Контакты{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h1>Контакты</h1>
+        {% if contacts %}
+            {% for el in contacts %}
+            <div class="news-item">
+                {% if el.profile_picture %}
+                    <img src="{{ el.profile_picture.url }}" width="150"><br>
+                {% endif %}
+                Полное имя: {{ el.first_name }} {{ el.last_name }}<br>
+                Номер телефона: {{ el.phone }}<br>
+                Эл. почта: {{ el.email }}
+            </div>
+            {% endfor %}
+        {% else %}
+            <h2>Такого быть не должно, но сотрудников нету.</h2>
+        {% endif %}
+    </div>
+{% endblock %}

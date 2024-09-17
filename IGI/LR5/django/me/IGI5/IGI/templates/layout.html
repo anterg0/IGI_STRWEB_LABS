@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <sidebar>
+            <div class="user-div">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="user-link">Личный кабинет</a>
+                    <a href="{% url 'logout' %}" class="user-link">Выйти</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="user-link">Войти</a>
+                    <a href="{% url 'register' %}" class="user-link">Регистрация</a>
+                {% endif %}
+            </div>
+        <h3>Навигация по сайту</h3>
+        <ul>
+            <a href="{% url 'home' %}">
+                <li>Главная</li>
+            </a>
+            <a href="{% url 'news' %}">
+                <li>Новости</li>
+            </a>
+            <a href="{% url 'goods' %}">
+                <li>Товары</li>
+            </a>
+            <a href="{% url 'faq' %}">
+                <li>FAQ</li>
+            </a>
+            <a href="{% url 'api' %}">
+                <li>API</li>
+            </a>
+            <a href="{% url 'promocodes' %}">
+                <li>Промокоды</li>
+            </a>
+            <a href="{% url 'jobs' %}">
+                <li>Вакансии</li>
+            </a>
+            <a href="{% url 'about' %}">
+                <li>О нас</li>
+            </a>
+            <a href="{% url 'contacts-view' %}">
+                <li>Контакты</li>
+            </a>
+            <a href="{% url 'reviews' %}">
+                <li>Отзывы</li>
+            </a>
+            <a href="{% url 'code' %}">
+                <li>Политика кофидециальности</li>
+            </a>
+            {% block sidebar-bottom%}
+            {% endblock %}
+        </ul>
+        {% if user.is_authenticated and user.is_employee or user.is_superuser %}
+            <h3>Спец панель</h3>
+            <ul>
+                <a href="{% url 'customers' %}">
+                    <li>Заказчики</li>
+                </a>
+                <a href="{% url 'sales-view' %}">
+                    <li>Заказы</li>
+                </a>
+            </ul>
+        {% else %}
+        {% endif %}
+    </sidebar>
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+</body>
+</html>

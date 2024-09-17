@@ -1,0 +1,243 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+sidebar {
+    width: 15%;
+    float: left;
+    background: darkslategrey;
+    min-height: 100vh;
+    color: white;
+    border-right: 5px solid #ccc;
+    padding: 1.5%;
+}
+
+sidebar ul {
+    list-style: none;
+}
+
+sidebar ul a {
+    text-decoration: none;
+}
+
+sidebar ul li {
+    color: #fff;
+    display: block;
+    margin-top: 10px;
+    transition: transform .6s ease;
+}
+
+sidebar ul li:hover, sidebar ul a:hover {
+    color: cyan;
+    transform: scale(1.1);
+}
+
+sidebar h3 {
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+main .features {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+faqContainer {
+    margin: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    text-align: left;
+    padding: 10px;
+}
+  
+faqContainer .answer {
+    border-top: 2px solid gray;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+faqContainer .question {
+    font-size: 25px;
+    font-style: italic;
+}
+
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.news-item {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.news-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.news-excerpt {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.blue-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.blue-button:hover {
+    background-color: #0056b3;
+}
+
+.no-news {
+    text-align: center;
+    font-size: 24px;
+    color: #666;
+    margin-top: 40px;
+}
+
+.article-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.article-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.article-date {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.article-content {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.create-form {
+    text-align: center;
+    margin: auto;
+}
+
+.form-control {
+    width: 30%;
+    background-color: white;
+    margin-bottom: 10px;
+    height: 30px;
+    font-size: 20px;
+}
+
+.full_text {
+    width: 700px;
+    height: 400px;
+}
+
+.user-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+.user-link {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-link:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.user-link:active {
+    background-color: #777; 
+}
+
+.user-link:not(:last-child) {
+    margin-right: 10px;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+jobContainer {
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+}
+
+.chart-container {
+    margin-bottom: 30px;
+}
+
+
+.order-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.order-item p {
+    margin: 5px 0;
+}
