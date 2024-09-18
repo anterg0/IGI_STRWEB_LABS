@@ -12,7 +12,11 @@
         <li>Item 2</li>
         <li>Item 3</li>
     </ul>
-
+    <h2>Ordered List</h2>
+    <ol start="4">
+        <li>test 1</li>
+        <li>test 2</li>
+    </ol>
     <h2>Abbreviation Example</h2>
     <p>The <abbr title="World Wide Web">WWW</abbr> is an <mark>abbreviation</mark> for the World Wide Web.</p>
 
@@ -101,6 +105,28 @@
         <input type="radio" name="t" value="2">Test2
         <input type="radio" name="t" value="3">Test3
         <input type="radio" name="t" value="4">Test4
+    </form>
+    <form style="text-align: left;">
+        <fieldset>
+            <legend>Интересы</legend>
+            <label>
+                <input type="checkbox" name="interest" value="спорт">
+                Спорт
+            </label><br>
+            <label>
+                <input type="checkbox" name="interest" value="музыка">
+                Музыка
+            </label><br>
+            <label>
+                <input type="checkbox" name="interest" value="путешествия">
+                Путешествия
+            </label><br>
+            <label>
+                <input type="checkbox" name="interest" value="литература">
+                Литература
+            </label><br>
+        </fieldset>
+        <button>Отправить</button>
     </form>
 </div>
 {% endblock %}

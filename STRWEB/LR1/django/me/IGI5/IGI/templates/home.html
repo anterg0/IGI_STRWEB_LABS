@@ -25,7 +25,7 @@
 {% block main %}
     <div class="features">
         <img src="{% static 'images/logo.jpeg' %}" alt="logo">
-        <h1 contenteditable="true">Welcome to my Django Page</h1>
+        <h1 contenteditable="true" class="animtest">Welcome to my Django Page</h1>
         {% if news %}
             <div class="news-item">
                 <img src="{{ news.picture.url }}" width="300">

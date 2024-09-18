@@ -28,8 +28,9 @@ def about(request):
     return render(request, 'about.html')
 
 def faq(request):
+    faqs = FAQModel.objects.all().order_by('date')
     data = {
-        'faqs': FAQModel.objects.all()
+        'faqs': faqs
     }
     return render(request, 'faq.html', data)
 

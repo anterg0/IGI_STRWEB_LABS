@@ -13,7 +13,11 @@
         <h2>Мои заказы</h2>
         {% if orders %}
             {% for el in orders %}
+            {% if el.date_of_fulfillment %}
+            <div class="order-item order-item-green">
+            {% else %}
             <div class="order-item">
+            {% endif %}
                 <p>Общая цена заказа: {{ el.total }} </p>
                 <p>Дата заказа: {{ el.date_of_order }} </p>
                 {% if el.promo_code %}
