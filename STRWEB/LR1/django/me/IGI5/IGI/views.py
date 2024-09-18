@@ -106,16 +106,13 @@ def profile(request):
     user_timezone = request.session.get('django_timezone')
     if user_timezone:
         timezone.activate(user_timezone)
-    # orders = request.user.sales_set.all()
-    # for el in orders:
-    #     el.total = el.quantity * el.product.price
-    #     if el.promo_code:
-    #         promo_dis = PromoCode.objects.filter(name=el.promo_code)[0].discount
-    #         el.total *= (1 - promo_dis)
-    # data = {
-    #     'orders': orders
-    # }
-    return render(request, 'profile.html')
+    orders = request.user.sales_set.all()
+    sales_items = SalesItem.objects.all()
+    data = {
+        'orders': orders,
+        'sales_items': sales_items
+    }
+    return render(request, 'profile.html', data)
 
 def promo_view(request):
     promos = PromoCode.objects.all()
@@ -315,7 +312,7 @@ def sales(request):
             dates.append(order_date)
             sales_data.append(order.total)
     
-    dates.sort(reverse=True)
+    dates.sort()
     sales_data = [sales_data[dates.index(date)] for date in dates]
     
     df = pd.DataFrame({'Date': dates[-10:], 'Sales': sales_data[-10:]})
@@ -414,4 +411,14 @@ def checkout(request):
             
             return redirect('profile')
 
+    return redirect('cart-detail')
+
+def html_examples(request):
+    return render(request, 'html_examples.html')
+
+@login_required
+def delete_cart_item(request, pk):
+    cart_item = get_object_or_404(CartItem, id=pk)
+    if cart_item:
+        cart_item.delete()
     return redirect('cart-detail')

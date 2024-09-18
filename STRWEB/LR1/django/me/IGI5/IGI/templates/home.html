@@ -1,10 +1,31 @@
 {% extends 'layout.html' %}
-
+{% load static %}
 {% block title %}Home{% endblock %}
+{% block head %}
+    <meta name="description" content="Welcome to my Django Page where you can find the latest news.">
+    <meta name="keywords" content="Django, News, Updates">
+    <link rel="icon" href="{% static 'bebrou.jpg' %}" type="image/jpeg">
+    <style>
+        .banner {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .banner img {
+            width: 100%;
+            height: auto;
+        }
+        img {
+            width: 25%;
+            height: auto;
+        }
+    </style>
+{% endblock %}
 
 {% block main %}
     <div class="features">
-        <h1>Welcome to my Django Page</h1>
+        <img src="{% static 'images/logo.jpeg' %}" alt="logo">
+        <h1 contenteditable="true">Welcome to my Django Page</h1>
         {% if news %}
             <div class="news-item">
                 <img src="{{ news.picture.url }}" width="300">
@@ -15,5 +36,12 @@
         {% else %}
             <h1 class="no-news">Нет ни одной новости</h1>
         {% endif %}
+        <h1>Наша реклама</h1>
+        <div class="banner">
+            <img src="{% static 'images/banners/banner1.jpg' %}" border="1" alt="Реклама 1">
+        </div>
+        <div class="banner">
+            <img src="{% static 'images/banners/banner2.jpg' %}" border="1" alt="Реклама 2">
+        </div>
     </div>
 {% endblock %}

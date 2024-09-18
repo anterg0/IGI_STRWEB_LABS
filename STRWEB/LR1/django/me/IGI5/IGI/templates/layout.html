@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    {% block head %}
+    {% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
@@ -16,7 +18,7 @@
                 <a href="{% url 'register' %}" class="user-link">Регистрация</a>
             {% endif %}
         </div>
-        <a href="{% url 'cart-detail' %}"><h4>Корзина</h4></a>
+        <a class="cart" href="{% url 'cart-detail' %}"><h4>Корзина</h4></a>
         <h3>Навигация по сайту</h3>
         <ul>
             <a href="{% url 'home' %}">
@@ -51,6 +53,9 @@
             </a>
             <a href="{% url 'code' %}">
                 <li>Политика кофидециальности</li>
+            </a>
+            <a href="{% url 'examples' %}">
+                <li>HTML Теги</li>
             </a>
             {% block sidebar-bottom%}
             {% endblock %}

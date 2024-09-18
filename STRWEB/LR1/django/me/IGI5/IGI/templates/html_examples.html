@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}
+
+{% block title %}HTML Examples{% endblock %}
+
+{% block main %}
+<div class="features">
+    <h1>HTML Elements Examples</h1>
+
+    <h2>Unordered List</h2>
+    <ul>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+
+    <h2>Abbreviation Example</h2>
+    <p>The <abbr title="World Wide Web">WWW</abbr> is an <mark>abbreviation</mark> for the World Wide Web.</p>
+
+    <h2>Quote Example</h2>
+    <blockquote>
+        "The journey of a thousand miles begins with one step." – Lao Tzu
+    </blockquote>
+
+    <h2>Date and Time Example</h2>
+    <time datetime="2024-09-01T12:00">September 1, 2024, Noon</time>
+
+    <h2>Poem</h2>
+    <pre>
+    Roses are red,
+    Violets are blue,
+    This is a poem,
+    Just for you.
+    </pre>
+
+    <h2>Link Examples</h2>
+    <a href="https://www.example.com" target="_blank">Visit Example.com</a>
+    <br>
+    <a href="/media/sample.pdf" download>Download PDF</a>
+
+    <h2>Anchors</h2>
+    <a href="#section1">Jump to Section 1</a>
+    <div id="section1">
+        <h3>Section 1</h3>
+        <p>This is the first section.</p>
+    </div>
+
+    <h2>Form Example</h2>
+    <form>
+        <label for="text-input">Text Input:</label>
+        <input type="text" id="text-input" name="text">
+        <br>
+
+        <label for="select-box">Select an option:</label>
+        <select id="select-box" name="select">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+        <br>
+
+        <label for="date-input">Date:</label>
+        <input type="date" id="date-input" name="date">
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Table Example</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">Merged Cell</td>
+                <td>Cell 2</td>
+                <td>Cell 3</td>
+            </tr>
+            <tr>
+                <td>Cell 5</td>
+                <td>Cell 6</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Media Elements</h2>
+    <video controls width="300">
+        <source src="/media/sample-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <br>
+    <audio controls>
+        <source src="/media/sample-audio.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+    <form>
+        <input type="radio" name="t" value="1">Test1
+        <input type="radio" name="t" value="2">Test2
+        <input type="radio" name="t" value="3">Test3
+        <input type="radio" name="t" value="4">Test4
+    </form>
+</div>
+{% endblock %}

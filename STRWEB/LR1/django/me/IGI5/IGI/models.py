@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator, MinValueValidator, MaxValueVa
 import re
 from django.contrib.auth.models import AbstractUser
 from datetime import date, datetime
+from django.utils import timezone
 
 class Article(models.Model):
     title = models.CharField('Название статьи', max_length=500)
@@ -62,6 +63,7 @@ class PromoCode(models.Model):
 class FAQModel(models.Model):
     question = models.TextField('Вопрос')
     answer = models.TextField('Ответ на вопрос')
+    date = models.DateField('Дата', default=timezone.now())
     def __str__(self):
         return self.question
     class Meta:

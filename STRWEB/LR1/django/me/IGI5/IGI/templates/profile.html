@@ -10,21 +10,33 @@
             <h2>Вы совершеннолетний пользователь (дата рождения: {{ request.user.date_of_birth }})</h2>
         {% endif %}
         <a href="{% url 'update-picture' %}">Добавить фото</a>
-        <!-- <h2>Мои заказы</h2>
+        <h2>Мои заказы</h2>
         {% if orders %}
             {% for el in orders %}
-                <div class="news-item">
-                    <p>Товар: {{ el.product }}</p>
-                    <p>Дата заказа: {{ el.date_of_order }}</p>
-                    {% if not el.promo_code %}
-                        <p>{{ el.quantity }} * {{ el.product.price }} = {{ el.total }}</p>
-                    {% else %}
-                        <p>({{ el.quantity }} * {{ el.product.price }}) + Promo Code = {{ el.total }}</p>
-                    {% endif %}
-                </div>
+            <div class="order-item">
+                <p>Общая цена заказа: {{ el.total }} </p>
+                <p>Дата заказа: {{ el.date_of_order }} </p>
+                {% if el.promo_code %}
+                    <p>Промокод: {{ el.promo_code }}</p>
+                {% endif %}
+                {% if el.date_of_fulfillment %}
+                    <p>Дата выполнения: {{ el.date_of_fulfillment }}</p>
+                {% else %}
+                {% endif %}
+                <details>
+                    <summary>Показать детали заказа</summary>
+                    <div>
+                        {% for item in sales_items %}
+                            {% if item.sale == el %}
+                                <p>Продукт: {{ item.product.name }} - Количество: {{ item.quantity }} - Цена: {{ item.product.price }} </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </details>
+            </div>
             {% endfor %}
         {% else %}
         <h3>Заказов нету</h3>
-        {% endif %} -->
+        {% endif %}
     </div>
 {% endblock %}

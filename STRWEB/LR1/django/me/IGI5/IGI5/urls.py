@@ -56,6 +56,8 @@ urlpatterns = [
     path('fulfill_order/<int:pk>', views.fulfill, name='fulfill-order'),
     path('profile_picture', views.update_profile_picture, name='update-picture'),
     path('cart', views.cart, name='cart-detail'),
-    path('checkout', views.checkout, name='checkout')
+    path('checkout', views.checkout, name='checkout'),
+    path('html_examples', views.html_examples, name='examples'),
+    path('cart/delete_cart_item/<int:pk>', views.delete_cart_item, name='delete-cart-item')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

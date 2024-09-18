@@ -17,10 +17,6 @@ sidebar ul {
     list-style: none;
 }
 
-sidebar a {
-    text-decoration: none;
-}
-
 sidebar ul a {
     text-decoration: none;
 }
@@ -55,7 +51,7 @@ faqContainer {
     margin: auto;
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 50%;
     text-align: left;
     padding: 10px;
 }
@@ -73,7 +69,6 @@ faqContainer .question {
 
 .news-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -322,4 +317,15 @@ jobContainer {
 
 .cart-container button:hover {
     background-color: #0056b3;
+}
+
+.cart, .cart h4 {
+    text-decoration: none;
+    color: white;
+    transition: transform .6s ease;
+}
+
+.cart:hover, .cart h4:hover {
+    color: cyan;
+    transform: scale(1.1);
 }

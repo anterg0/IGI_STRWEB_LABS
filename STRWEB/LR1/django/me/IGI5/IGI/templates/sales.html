@@ -17,7 +17,6 @@
                     {% for order in fulfilled_orders %}
                         <div class="order-item">
                             <p>Заказчик: {{ order.user.first_name }} {{ order.user.last_name }} ({{ order.user.username }}) </p>
-                            <p>Продукт: {{ order.product.name }} </p>
                             <p>Общая цена заказа: {{ order.total }} </p>
                             <p>Дата заказа: {{ order.date_of_order }} </p>
                             {% if order.date_of_fulfillment %}
@@ -29,7 +28,6 @@
                                 </form>
                             {% endif %}
 
-                            <!-- Details for the sale items -->
                             <details>
                                 <summary>Показать детали заказа</summary>
                                 <div>
@@ -53,7 +51,6 @@
                     {% for order in all_orders %}
                         <div class="order-item">
                             <p>Заказчик: {{ order.user.first_name }} {{ order.user.last_name }} ({{ order.user.username }}) </p>
-                            <p>Продукт: {{ order.product.name }} </p>
                             <p>Общая цена заказа: {{ order.total }} </p>
                             <p>Дата заказа: {{ order.date_of_order }} </p>
                             {% if order.date_of_fulfillment %}
@@ -64,8 +61,6 @@
                                     <button type="submit">Выполнить заказ</button>
                                 </form>
                             {% endif %}
-
-                            <!-- Details for the sale items -->
                             <details>
                                 <summary>Показать детали заказа</summary>
                                 <div>
