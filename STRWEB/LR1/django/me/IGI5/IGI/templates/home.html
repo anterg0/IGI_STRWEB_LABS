@@ -23,25 +23,27 @@
 {% endblock %}
 
 {% block main %}
-    <div class="features">
-        <img src="{% static 'images/logo.jpeg' %}" alt="logo">
-        <h1 contenteditable="true" class="animtest">Welcome to my Django Page</h1>
+    <div class="features" itemscope itemtype="http://schema.org/WebPage">
+        <img src="{% static 'images/logo.jpeg' %}" alt="logo" itemprop="image">
+        <h1 contenteditable="true" class="animtest" itemprop="headline">Welcome to my Django Page</h1>
+        
         {% if news %}
-            <div class="news-item">
-                <img src="{{ news.picture.url }}" width="300">
-                <h2 class="news-title">{{ news.title }}</h2>
-                <p class="news-excerpt">{{ news.first_sentence }}</p>
-                <a href="{% url 'news-detail' news.id %}" class="blue-button">Читать далее</a>
+            <div class="news-item" itemscope itemtype="http://schema.org/NewsArticle">
+                <img src="{{ news.picture.url }}" width="300" itemprop="image">
+                <h2 class="news-title" itemprop="headline">{{ news.title }}</h2>
+                <p class="news-excerpt" itemprop="description">{{ news.first_sentence }}</p>
+                <a href="{% url 'news-detail' news.id %}" class="blue-button" itemprop="url">Читать далее</a>
             </div>
         {% else %}
             <h1 class="no-news">Нет ни одной новости</h1>
         {% endif %}
+        
         <h1>Наша реклама</h1>
-        <div class="banner">
-            <img src="{% static 'images/banners/banner1.jpg' %}" border="1" alt="Реклама 1">
+        <div class="banner" itemscope itemtype="http://schema.org/ImageObject">
+            <img src="{% static 'images/banners/banner1.jpg' %}" border="1" alt="Реклама 1" itemprop="contentUrl">
         </div>
-        <div class="banner">
-            <img src="{% static 'images/banners/banner2.jpg' %}" border="1" alt="Реклама 2">
+        <div class="banner" itemscope itemtype="http://schema.org/ImageObject">
+            <img src="{% static 'images/banners/banner2.jpg' %}" border="1" alt="Реклама 2" itemprop="contentUrl">
         </div>
     </div>
 {% endblock %}

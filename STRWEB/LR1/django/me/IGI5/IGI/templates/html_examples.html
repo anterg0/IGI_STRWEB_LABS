@@ -128,5 +128,42 @@
         </fieldset>
         <button>Отправить</button>
     </form>
+    Color:&nbsp;<input type="color" name="color"><br>
+    Date:&nbsp;<input type="date" name="date"><br>
+    Date and time:&nbsp;<input type="datetime" name="dt"><br>
+    Date and time (local):&nbsp;<input type="datetime-local" name="dtl"><br>
+    Email:&nbsp;<input type="email" name="email"><br>
+    Number:&nbsp;<input type="number" name="number"><br>
+    Range:&nbsp;<input type="range" name="range" min="10" max="20"><br>
+    Search:&nbsp;<input type="search" name="search"><br>
+    Tel:&nbsp;<input type="tel" name="tel"><br>
+    Time:&nbsp;<input type="time" name="time"><br>
+    URL:&nbsp;<input type="url" name="url"><br>
+    Month:&nbsp;<input type="month" name="month"><br>
+    Week:&nbsp;<input type="week" name="week"><br>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+         Fruit: <input list="fruitlist" id="fave" name="fave" />
+        </p>
+        <button type="submit">Submit Vote</button>
+    </form>
+      
+    <datalist id="fruitlist">
+    <option value="Apples" label="Lovely Apples" />
+    <option value="Oranges">Refreshing Oranges</option>
+    <option value="Cherries" />
+    </datalist>
+    <select size="7" name="list">
+    <option value="v1">Not in group</option>
+    <optgroup label="Group 1">
+        <option value="v2">Item G1-1</option>
+        <option value="v3">Item G1-2</option>
+    </optgroup>
+    <optgroup label="Group 2">
+        <option value="v4">Item G2-1</option>
+        <option value="v5">Item G2-2</option>
+    </optgroup>
+    </select>
 </div>
 {% endblock %}
