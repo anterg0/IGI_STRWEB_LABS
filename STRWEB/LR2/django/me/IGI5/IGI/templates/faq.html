@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}FAQ{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <h2>FAQ, a.k.a Часто задаваемые вопросы</h2>
+        {% for el in faqs %}
+            <faqContainer>
+                <details>
+                    <summary class="question">
+                        Q: {{ el.question }} ({{ el.date }})
+                    </summary>
+                    <span class="answer">
+                        A: {{ el.answer }}
+                    </span>
+                </details>
+            </faqContainer>
+        {% endfor %}
+    </div>
+{% endblock %}

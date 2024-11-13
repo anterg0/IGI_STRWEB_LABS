@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}Изменение изображения профиля{% endblock %}
+
+{% block main %}
+    <div class="features">
+        <form method="post" enctype="multipart/form-data">  
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+{% endblock %}

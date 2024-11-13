@@ -1,0 +1,722 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+/* @media (max-width: 600px) {
+    body {
+        background-color: lightblue;
+    }
+
+}
+
+
+@media (min-width: 601px) and (max-width: 1200px) {
+    body {
+        background-color: lightgreen;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    body {
+        background-color: lightcoral;
+    }
+} */
+
+ul[about] div, .promo, div[about] {
+    background-color: rgba(149, 149, 149, 0.753);
+    box-shadow: 10px 10px 30px black;
+    padding: 25px;
+    border-radius: 17px;
+    list-style-type: none;
+}
+
+ul[about] div li, .promo h4 {
+    box-shadow: 0px 0px 10px black;
+    padding: inherit;
+    border-radius: inherit;
+    margin: 15px;
+    font-size: 20px;
+}
+
+.certificate {
+    display: flex;
+    position: relative;
+    height: 500px;
+    width: 420px;
+    background-size: 490px 400px;
+    background-image: linear-gradient(gray, white, gray);
+    justify-content: center;
+    align-items: center;
+}
+
+.certificate img {
+    height: 520px;
+    width: 450px;
+    z-index: 10;
+}
+
+.certificate h2 {
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    color: red;
+    font-weight: normal;
+    font-size: 50px;
+}
+
+.certificate p {
+    position: absolute;
+    top: 200px;
+    width: 300px;
+    left: 60px;
+}
+
+.certificate p[zindex] {
+    position: absolute;
+    top: 50px;
+}
+
+.logo-anim {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    font-kerning: none;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    letter-spacing: -2px;
+    transform: translate(-50%, -50%);
+    font-size: 70px;
+    font-family: 'SignPainter', Arial, sans-serif;
+    text-align: center;
+    z-index: 10;
+    color: white;
+    background-color: rgba(112, 112, 112, 0.59);
+    border-radius: 100%;
+    padding: 10px;
+    opacity: 0;
+    animation: fadingin 2s ease-in;
+    animation-delay: 10s;
+    animation-fill-mode: forwards;
+}
+
+.fade {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-size: 100% 100%;
+    background-position: center;
+    opacity: 0;
+    animation: fading 5s;
+    animation-fill-mode: forwards;
+}
+
+.fadein {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background-size: 100% 100%;
+    background-position: center;
+    opacity: 0;
+    animation: fadingin 5s;
+    animation-fill-mode: forwards;
+}
+
+.fade1 {
+    left: 200px;
+    animation-delay: 0s;
+}
+
+.fade2 {
+    animation-delay: 1s;
+}
+
+.fade3 {
+    right: 200px;
+    animation-delay: 2s;
+}
+
+.fade4 {
+    left: 200px;
+    animation-delay: 5s;
+}
+
+.fade5 {
+    animation-delay: 6s;
+}
+
+.fade6 {
+    right: 200px;
+    animation-delay: 7s;
+}
+
+@keyframes fading {
+    0% {
+        opacity: 0;
+        transform: translate(0, -200px);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(0,0);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadingin {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+  .lego-block {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    background-color: #f1c40f;
+    border-radius: 5px;
+    margin: 0 auto;
+    animation: preload 5s ease-in-out infinite;
+    animation-direction: alternate;
+  }
+  
+  .leftstud {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    background-color: #f1c40fb9;
+    top: -30px;
+    left: 30px;
+  }
+  
+  .rightstud {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    background-color: #f1c40fb9;
+    top: -30px;
+    left:120px;
+  }
+
+  @keyframes preload {
+    0% {
+        opacity: 0;
+        transform: translate(400px, 0) rotateZ(180deg);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(0,0) rotateZ(0deg);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translate(0,0);
+    }
+    70% {
+        opacity: 1;
+        transform: translate(0,0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-400px,0) rotate(-180deg);
+    }
+  }
+
+body {
+    margin: 0;
+    font-family: 'SignPainter', Arial, sans-serif;
+    font-size: large;
+    display: flex;
+}
+main {
+    flex: 1;
+}
+sidebar {
+    position: sticky;
+    width: 15%;
+    float: left;
+    background: darkslategrey;
+    min-height: 100vh;
+    color: white;
+    border-right: 5px solid #ccc;
+    padding: 1.5%;
+}
+
+.article-content::first-letter {
+    font-size: 60px;
+    color: red;
+}
+
+
+ul[ultest] li:first-child {
+    color: red;
+}
+
+ul[ultest] {
+    list-style-type: none;
+}
+
+ul[ultest] li::before {
+    content: "★";
+}
+
+ul[ultest] li:last-child {
+    color: blue;
+}
+
+ul[ultest] li:nth-child(2n) {
+    background-color: lightgray;
+}
+
+table[tabletest] tr:nth-child(2n) {
+    background-color: #00ff04;
+}
+
+table[tabletest] td:empty {
+    background-color: red;
+}
+
+
+p::selection {
+    text-decoration: line-through;
+}
+
+a[test]:visited {
+    color: yellow;
+}
+
+a[test]:link {
+    color: blue;
+    text-decoration: underline;
+}
+
+a[test]:active {
+    color: red;
+    text-decoration: none;
+}
+
+label[ltest]:has(input[type="checkbox"]:required) {
+    color: red;
+    font-size: 50px;
+}
+
+label[ltest]:has(input[type="checkbox"]:enabled) {
+    text-decoration: overline;
+}
+
+input[type="radio"]:checked {
+    outline: 1px dotted purple;
+}
+
+input[type^="check"]:checked {
+    outline: 5px dashed darkgreen;
+}
+
+label[ltest]:has(input[type$="box"]:disabled) {
+    text-decoration: line-through;
+}
+
+input[type="number"][ntest]:out-of-range {
+    background-color: gray;
+}
+
+q[qtest][lang^="eng"]::before {
+    content: open-quote;
+}
+
+q[qtest][lang^="eng"]::after {
+    content: close-quote;
+}
+
+sidebar ul {
+    list-style: none;
+}
+
+sidebar ul a {
+    text-decoration: none;
+}
+
+sidebar ul li {
+    color: #fff;
+    display: block;
+    margin-top: 10px;
+    transition: transform .6s ease;
+}
+
+sidebar ul li:hover, sidebar ul a:hover {
+    color: cyan;
+    transform: scale(1.1);
+}
+
+sidebar h3 {
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+main .features {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+faqContainer {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    text-align: left;
+    padding: 10px;
+}
+  
+faqContainer .answer {
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+faqContainer .question {
+    border-bottom: 2px solid gray;
+    font-size: 25px;
+    font-style: italic;
+}
+
+.news-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+}
+
+.news-item {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.news-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.news-excerpt {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.blue-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.blue-button:hover {
+    background-color: #0056b3;
+}
+
+.aboba {
+    border: black 0px solid;
+    transition: all 1s;
+}
+
+.aboba:hover {
+    border: purple 10px solid;
+    border-radius: 50px;
+    padding: 20px;
+    transform: rotate3d(0, 0, 1, 360deg);
+}
+
+.no-news {
+    text-align: center;
+    font-size: 24px;
+    color: #666;
+    margin-top: 40px;
+}
+
+.article-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.article-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.article-date {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.article-content {
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 20px;
+    padding: 15px;
+    text-align: justify;
+    text-indent: 60px;
+    /* font-variant: small-caps; */
+    word-spacing: 2px;
+
+}
+
+.create-form {
+    text-align: center;
+    margin: auto;
+}
+
+.form-control {
+    width: 30%;
+    background-color: white;
+    margin-bottom: 10px;
+    height: 30px;
+    font-size: 20px;
+}
+
+.full_text {
+    width: 700px;
+    height: 400px;
+}
+
+.user-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+.user-link {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.user-link:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.user-link:active {
+    background-color: #777; 
+}
+
+.user-link:not(:last-child) {
+    margin-right: 10px;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+jobContainer {
+    border: 2px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+}
+
+jobContainer p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.chart-container {
+    margin-bottom: 30px;
+}
+
+.orders {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.order-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.order-item-green {
+    border: 2px solid lightgreen;
+}
+
+.order-item p {
+    margin: 5px 0;
+}
+
+
+.test {
+    border: black 10px solid;
+    padding: 5px;
+    text-align: center;
+}
+
+.cart-container {
+    margin: auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-container th, .cart-container td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-container th {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+}
+
+.cart-container tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.cart-container tfoot tr {
+    font-weight: bold;
+    background-color: #f9f9f9;
+}
+
+.cart-container button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cart-container button:hover {
+    background-color: #0056b3;
+}
+
+.cart, .cart h4 {
+    text-decoration: none;
+    color: white;
+    transition: transform .6s ease;
+}
+
+.cart:hover, .cart h4:hover {
+    color: cyan;
+    transform: scale(1.1);
+}
+
+.animtest {
+    border: 0px solid black;
+    transition: all 0.6s;
+}
+
+.animtest:focus {
+    border: 5px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.codeofcond {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.codeofcond h1 {
+    text-align: center;
+    color: #333;
+}
+
+.codeofcond h2 {
+    color: #007bff;
+    margin-top: 20px;
+}
+
+.codeofcond p {
+    margin: 10px 0;
+    color: #444;
+}
+
+.codeofcond ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.codeofcond ul li {
+    margin-bottom: 5px;
+}
+
+.multi-col {
+    columns: 150px 3;
+    column-rule-style: solid;
+}
