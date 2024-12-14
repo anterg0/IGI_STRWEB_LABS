@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}Sales{% endblock %}
+
+{% block main %}
+    <div class="chair-background"></div>
+
+    <div class="features">
+        <h1>Обзор продаж</h1>
+
+        <div class="chart-container">
+            {{ chart|safe }}
+        </div>
+
+        <div class="orders">
+            <div class="order-list">
+                <h2>Заказы за 10 дней</h2>
+                {% if fulfilled_orders %}
+                    {% for order in fulfilled_orders %}
+                        <div class="order-item">
+                            <p>Заказчик: {{ order.user.first_name }} {{ order.user.last_name }} ({{ order.user.username }}) </p>
+                            <p>Общая цена заказа: {{ order.total }} </p>
+                            <p>Дата заказа: {{ order.date_of_order }} </p>
+                            {% if order.date_of_fulfillment %}
+                                <p>Дата выполнения: {{ order.date_of_fulfillment }}</p>
+                            {% else %}
+                                <form method="post" action="{% url 'fulfill-order' order.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Выполнить заказ</button>
+                                </form>
+                            {% endif %}
+
+                            <details>
+                                <summary>Показать детали заказа</summary>
+                                <div>
+                                    {% for item in sales_items %}
+                                        {% if item.sale == order %}
+                                            <p>Продукт: {{ item.product.name }} - Количество: {{ item.quantity }} - Цена: {{ item.product.price }} </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Заказов пока нету.</p>
+                {% endif %}
+            </div>
+
+            <div class="order-list">
+                <h2>Все заказы</h2>
+                {% if all_orders %}
+                    {% for order in all_orders %}
+                        <div class="order-item">
+                            <p>Заказчик: {{ order.user.first_name }} {{ order.user.last_name }} ({{ order.user.username }}) </p>
+                            <p>Общая цена заказа: {{ order.total }} </p>
+                            <p>Дата заказа: {{ order.date_of_order }} </p>
+                            {% if order.date_of_fulfillment %}
+                                <p>Дата выполнения: {{ order.date_of_fulfillment }}</p>
+                            {% else %}
+                                <form method="post" action="{% url 'fulfill-order' order.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Выполнить заказ</button>
+                                </form>
+                            {% endif %}
+                            <details>
+                                <summary>Показать детали заказа</summary>
+                                <div>
+                                    {% for item in sales_items %}
+                                        {% if item.sale == order %}
+                                            <p>Продукт: {{ item.product.name }} - Количество: {{ item.quantity }} - Цена: {{ item.product.price }} </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </details>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Заказов пока нету.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chairImages = [
+            '{% static "images/chair1.png" %}',
+            '{% static "images/chair2.png" %}',
+            '{% static "images/chair3.png" %}'
+        ];
+
+        const chairCount = 30;
+        const chairContainer = document.querySelector('.chair-background');
+
+        chairContainer.style.position = 'absolute';
+        chairContainer.style.top = '0';
+        chairContainer.style.left = '0';
+        chairContainer.style.width = '100%';
+        chairContainer.style.height = '100%';
+        chairContainer.style.zIndex = '-1';
+        chairContainer.style.overflow = 'hidden';
+
+        for (let i = 0; i < chairCount; i++) {
+            const chair = document.createElement('div');
+            chair.className = 'chair';
+
+            const imgIndex = Math.floor(Math.random() * chairImages.length);
+            chair.style.backgroundImage = `url('${chairImages[imgIndex]}')`;
+
+            const size = 80 + Math.random() * 50;
+            chair.style.width = `${size}px`;
+            chair.style.height = `${size}px`;
+            chair.style.position = 'absolute';
+            chair.style.top = `${Math.random() * 200}vh`;
+            chair.style.left = `${Math.random() * 100}vw`;
+            chairContainer.appendChild(chair);
+        }
+
+        let lastScrollY = window.scrollY;
+
+        document.addEventListener('scroll', () => {
+            const chairs = document.querySelectorAll('.chair');
+            const currentScrollY = window.scrollY;
+            const scrollDirection = currentScrollY > lastScrollY ? 1 : -1;
+
+            chairs.forEach((chair, index) => {
+                const rotation = parseInt(chair.getAttribute('data-rotation') || '0', 10);
+                const newRotation = rotation + scrollDirection * (index % 2 === 0 ? 2 : -2);
+                chair.style.transform = `rotate(${newRotation}deg)`;
+                chair.setAttribute('data-rotation', newRotation);
+            });
+
+            lastScrollY = currentScrollY;
+        });
+    </script>
+{% endblock %}

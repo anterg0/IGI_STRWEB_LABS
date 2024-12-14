@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}Demo: Chairs Scrolling{% endblock %}
+
+{% block main %}
+<style>
+    .chair-background {
+        position: absolute;
+        width: 100%;
+        height: 300vh;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .chair {
+        transform-origin: center;
+        position: absolute;
+    }
+
+    .demo-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .demo-content h1 {
+        margin-top: 50px;
+    }
+</style>
+
+    <div class="chair-background"></div>
+
+    <div class="demo-content">
+        <h1>Демонстрация анимации</h1>
+        <p>Прокрутите страницу, чтобы увидеть, как стулья вращаются и перемещаются вместе со страницей.</p>
+        <div style="height: 200vh;"></div>
+    </div>
+
+    <script>
+        const chairImages = [
+            '{% static "images/chair1.png" %}',
+            '{% static "images/chair2.png" %}',
+            '{% static "images/chair3.png" %}'
+        ];
+
+        const chairCount = 1000;
+        const chairContainer = document.querySelector('.chair-background');
+
+        chairContainer.style.position = 'absolute';
+        chairContainer.style.width = '100%';
+        chairContainer.style.height = '300vh';
+        chairContainer.style.top = '0';
+        chairContainer.style.left = '0';
+
+        for (let i = 0; i < chairCount; i++) {
+            const chair = document.createElement('div');
+            chair.className = 'chair';
+
+            const imgIndex = Math.floor(Math.random() * chairImages.length);
+            const img = document.createElement('img');
+            img.src = chairImages[imgIndex];
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+
+            chair.appendChild(img);
+
+            const size = 80 + Math.random() * 50;
+            chair.style.width = `${size}px`;
+            chair.style.height = `${size}px`;
+            chair.style.position = 'absolute';
+            chair.style.top = `${Math.random() * 300}vh`;
+            chair.style.left = `${Math.random() * 100}vw`;
+
+            chairContainer.appendChild(chair);
+        }
+
+        let lastScrollY = window.scrollY;
+
+        document.addEventListener('scroll', () => {
+            const chairs = document.querySelectorAll('.chair');
+            const currentScrollY = window.scrollY;
+            const scrollDirection = currentScrollY > lastScrollY ? 1 : -1;
+
+            chairs.forEach((chair, index) => {
+                const rotation = parseInt(chair.getAttribute('data-rotation') || '0', 10);
+                const newRotation = rotation + scrollDirection * (index % 2 === 0 ? 2 : -2);
+                chair.style.transform = `rotate(${newRotation}deg)`;
+                chair.setAttribute('data-rotation', newRotation);
+            });
+
+            lastScrollY = currentScrollY;
+        });
+    </script>
+{% endblock %}

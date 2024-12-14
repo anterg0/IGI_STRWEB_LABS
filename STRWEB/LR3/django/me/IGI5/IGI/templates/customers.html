@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %}Заказчики{% endblock %}
+
+{% block main %}
+    <div class="features">
+        {% if customers %}
+            {% for el in customers %}
+                <div class="news-item">
+                    <p>Имя и Фамилия: {{ el.first_name }} {{ el.last_name }}</p>
+                    <p>Эл. почта: {{ el.email }}</p>
+                    <p>Номер телефона: {{ el.phone }}</p>
+                    <p>Город: {{ el.city }}</p>
+                    <p>Адрес: {{ el.address }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1 class="no-news">Нет ни одного заказчика</h1>
+        {% endif %}
+    </div>
+{% endblock %}

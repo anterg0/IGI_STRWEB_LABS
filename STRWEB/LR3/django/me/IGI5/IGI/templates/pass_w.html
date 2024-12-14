@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}Пассажиры авиакомпании{% endblock %}
+
+{% block main %}
+<script src="{% static 'js/passengers_w.js' %}"></script>
+    <div class="features">
+        <h1>Пассажиры авиакомпании</h1>
+
+        <label for="surname">Фамилия: </label>
+        <input type="text" id="surname" required><br>
+
+        <label for="name">Имя: </label>
+        <input type="text" id="name" required><br>
+
+        <label for="flightNumber">Номер рейса: </label>
+        <input type="text" id="flightNumber" required><br>
+
+        <button id="addPassengerBtn">Добавить пассажира</button>
+        <button id="searchSurname">Искать однофамильцев</button>
+
+        <h2>Список пассажиров:</h2>
+        <div id="passengerList"></div>
+        
+        <h2>Результат поиска однофамильцев:</h2>
+        <div id="result"></div>
+    </div>
+{% endblock %}

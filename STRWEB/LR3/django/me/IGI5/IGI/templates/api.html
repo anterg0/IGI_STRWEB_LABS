@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title %}API{% endblock %}
+{% load static %}
+{% block main %}
+    <!-- Прелоадер -->
+    <div id="preloader" style="display: flex; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.8); z-index: 9999;">
+        <div class="lego-block">
+            <div class="leftstud"></div>
+            <div class="rightstud"></div>
+            <div class="body"></div>
+        </div>
+    </div>
+
+    <div class="features">
+        <h1>Сторонние API</h1>
+        <h2>Cat Fact</h2>
+        <h3 id="catFact">Загрузка...</h3>
+        <h2>Joke API</h2>
+        <h3 id="joke">Загрузка...</h3>
+    </div>
+
+    <script src="{% static 'js/api_preload.js'%}"></script>
+{% endblock %}

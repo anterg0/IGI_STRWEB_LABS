@@ -1,0 +1,331 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block head %}
+    <script src="{% static 'js/check.js' %}"></script>
+    <meta name="description" content="Welcome to my Django Page where you can find the latest news.">
+    <meta name="keywords" content="Django, News, Updates">
+    <link rel="icon" href="{% static 'bebrou.jpg' %}" type="image/jpeg">
+    <style>
+        .banner {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .banner img {
+            width: 100%;
+            height: auto;
+        }
+        img {
+            width: 25%;
+            height: auto;
+        }
+
+        /* Стили для слайдера */
+        .slider-container {
+            position: relative;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-size: 18px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .pagination {
+            position: absolute;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .pagination-btn {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .pagination-btn.active {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        .slider-btn {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .loop-toggle,
+        .navs-toggle,
+        .pags-toggle {
+            margin: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="features" itemscope itemtype="http://schema.org/WebPage">
+        <div class="logo-anim">
+            <div class="fade fade1" style="background-image: url('{% static 'images/hammer.png' %}');"></div>
+            <div class="fade fade2" style="background-image: url('{% static 'images/screws.png' %}');"></div>
+            <div class="fade fade3" style="background-image: url('{% static 'images/planks.png' %}');"></div>
+            <div class="fadein fade4" style="background-image: url('{% static 'images/sofa.png' %}');"></div>
+            <div class="fadein fade5" style="background-image: url('{% static 'images/bed.png' %}');"></div>
+            <div class="fadein fade6" style="background-image: url('{% static 'images/table.png' %}');"></div>
+            <div class="text-overlay">Уютный дом</div>
+        </div>
+        <h1 contenteditable="true" class="animtest" itemprop="headline">Welcome to my Django Page</h1>
+        
+        {% if news %}
+            <div class="news-item" itemscope itemtype="http://schema.org/NewsArticle">
+                <img src="{{ news.picture.url }}" width="300" itemprop="image">
+                <h2 class="news-title" itemprop="headline">{{ news.title }}</h2>
+                <p class="news-excerpt" itemprop="description">{{ news.first_sentence }}</p>
+                <a href="{% url 'news-detail' news.id %}" class="blue-button" itemprop="url">Читать далее</a>
+            </div>
+        {% else %}
+            <h1 class="no-news">Нет ни одной новости</h1>
+        {% endif %}
+        <h1 id="countdown"></h1>
+        <h1 id="message"></h1>
+        <script src="{% static 'js/countdown.js' %}"></script>
+        <h1>Preloader</h1>
+        <div>
+            <div class="lego-block">
+                <div class="leftstud"></div>
+                <div class="rightstud"></div>
+                <div class="body"></div>
+            </div>
+        </div>
+        
+        <div class="slider-container">
+            <div id="slider" class="slider">
+                {% for img_url, caption in slides %}
+                    <div class="slide" style="{% if forloop.first %}display: block;{% else %}display: none;{% endif %}">
+                        <img src="{% static img_url %}" alt="Slide {{ forloop.counter }}" class="slide-image">
+                        <p class="slide-caption">{{ caption }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Пагинация -->
+            <div class="pagination" id="pagination" style="display: {% if pags_enabled == 'true' %}block{% else %}none{% endif %};">
+                {% for i in slide_numbers %}
+                    <button class="pagination-btn" data-slide="{{ i }}">{{ i }}/{{ total_slides }}</button>
+                {% endfor %}
+            </div>
+
+            <div class="nav-buttons">
+                <button id="prevBtn" class="slider-btn" style="display: {% if navs_enabled == 'true' %}inline-block{% else %}none{% endif %};">Назад</button>
+                <button id="nextBtn" class="slider-btn" style="display: {% if navs_enabled == 'true' %}inline-block{% else %}none{% endif %};">Далее</button>
+            </div>
+
+            <div id="slideInfo">1/{{ total_slides }}</div>
+            <br><br><br><br><br>
+            <div>
+                <!-- Кнопки для управления слайдером -->
+                <button id="loopToggle" class="loop-toggle">
+                    {% if loop_enabled %}
+                        Loop: ON
+                    {% else %}
+                        Loop: OFF
+                    {% endif %}
+                </button>
+                <button id="navsToggle" class="navs-toggle">
+                    {% if navs_enabled == 'true' %}
+                        Navigation: ON
+                    {% else %}
+                        Navigation: OFF
+                    {% endif %}
+                </button>
+                <button id="pagsToggle" class="pags-toggle">
+                    {% if pags_enabled == 'true' %}
+                        Pagination: ON
+                    {% else %}
+                        Pagination: OFF
+                    {% endif %}
+                </button>
+                <button id="autoScrollToggle" class="auto-toggle">
+                    Auto Scroll: OFF
+                </button>
+            </div>
+        </div>
+
+        <!-- Кнопка для остановки автопрокрутки при наведении мышки -->
+        <button id="stopMouseHoverToggle" class="stop-hover-toggle">
+            Stop on Hover: OFF
+        </button>
+
+        <div>
+            <label for="autoScrollDelay">Автоматическое переключение (секунды):</label>
+            <input type="number" id="autoScrollDelay" value="5" min="1" step="1">
+            <button id="setAutoScrollDelay">Установить задержку</button>
+        </div>
+        
+        <h1>Наша реклама</h1>
+        <div class="banner" itemscope itemtype="http://schema.org/ImageObject">
+            <img src="{% static 'images/banners/banner1.jpg' %}" border="1" alt="Реклама 1" itemprop="contentUrl">
+        </div>
+        <div class="banner" itemscope itemtype="http://schema.org/ImageObject">
+            <img src="{% static 'images/banners/banner2.jpg' %}" border="1" alt="Реклама 2" itemprop="contentUrl">
+        </div>
+    </div>
+
+    <!-- Сценарий для слайдера -->
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const paginationButtons = document.querySelectorAll('.pagination-btn');
+        const pagination = document.getElementById('pagination');
+
+        let autoScrollEnabled = false;
+        let autoScrollInterval;
+        let loopEnabled = "{{ loop_enabled|yesno:'true,false' }}" === 'true';
+        let navsEnabled = "{{ navs_enabled }}"; 
+        let pagsEnabled = "{{ pags_enabled }}"; 
+
+        function showSlide(index) {
+            slides[currentIndex].style.display = 'none';
+            paginationButtons[currentIndex].classList.remove('active');
+
+            if (index >= totalSlides) {
+                currentIndex = loopEnabled ? 0 : totalSlides - 1;
+            } else if (index < 0) {
+                currentIndex = loopEnabled ? totalSlides - 1 : 0;
+            } else {
+                currentIndex = index;
+            }
+
+            slides[currentIndex].style.display = 'block';
+            paginationButtons[currentIndex].classList.add('active');
+            updateSlideInfo();
+        }
+
+        function updateSlideInfo() {
+            document.getElementById('slideInfo').textContent = `${currentIndex + 1}/${totalSlides}`;
+        }
+
+        paginationButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const slideNumber = parseInt(e.target.dataset.slide) - 1;
+                showSlide(slideNumber);
+            });
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            showSlide(currentIndex + 1); 
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            showSlide(currentIndex - 1);
+        });
+
+        document.getElementById('loopToggle').addEventListener('click', () => {
+            loopEnabled = !loopEnabled;
+            document.getElementById('loopToggle').textContent = loopEnabled ? 'Loop: ON' : 'Loop: OFF';
+        });
+
+        document.getElementById('navsToggle').addEventListener('click', () => {
+            navsEnabled = (navsEnabled === 'true') ? 'false' : 'true'; 
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            prevBtn.style.display = navsEnabled === 'true' ? 'inline-block' : 'none';
+            nextBtn.style.display = navsEnabled === 'true' ? 'inline-block' : 'none';
+
+            document.getElementById('navsToggle').textContent = navsEnabled === 'true' ? 'Navigation: ON' : 'Navigation: OFF';
+        });
+
+        document.getElementById('pagsToggle').addEventListener('click', () => {
+            pagsEnabled = (pagsEnabled === 'true') ? 'false' : 'true'; 
+            pagination.style.display = pagsEnabled === 'true' ? 'block' : 'none';
+
+            document.getElementById('pagsToggle').textContent = pagsEnabled === 'true' ? 'Pagination: ON' : 'Pagination: OFF';
+        });
+
+        let stopMouseHoverEnabled = false;
+
+        document.getElementById('stopMouseHoverToggle').addEventListener('click', () => {
+            stopMouseHoverEnabled = !stopMouseHoverEnabled;
+            document.getElementById('stopMouseHoverToggle').textContent = stopMouseHoverEnabled ? 'Stop on Hover: ON' : 'Stop on Hover: OFF';
+        });
+
+        let autoScrollDelay = 5;  
+
+        function startAutoScroll() {
+            if (autoScrollEnabled) {
+                autoScrollInterval = setInterval(() => {
+                    showSlide(currentIndex + 1);
+                }, autoScrollDelay * 1000);  
+            }
+        }
+
+        document.getElementById('setAutoScrollDelay').addEventListener('click', () => {
+            const inputDelay = document.getElementById('autoScrollDelay').value;
+            if (inputDelay && inputDelay > 0) {
+                autoScrollDelay = parseInt(inputDelay);
+                if (autoScrollEnabled) {
+                    clearInterval(autoScrollInterval);
+                    startAutoScroll();
+                }
+            } else {
+                alert('Пожалуйста, введите положительное число!');
+            }
+        });
+
+        function stopAutoScroll() {
+            clearInterval(autoScrollInterval);
+        }
+
+        document.getElementById('autoScrollToggle').addEventListener('click', () => {
+            autoScrollEnabled = !autoScrollEnabled;
+            document.getElementById('autoScrollToggle').textContent = autoScrollEnabled ? 'Auto Scroll: ON' : 'Auto Scroll: OFF';
+            if (autoScrollEnabled) {
+                startAutoScroll();
+            } else {
+                stopAutoScroll();
+            }
+        });
+
+        const slider = document.getElementById('slider');
+        slider.addEventListener('mouseenter', () => {
+            if (stopMouseHoverEnabled) stopAutoScroll(); 
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            if (autoScrollEnabled) startAutoScroll(); 
+        });
+
+        showSlide(currentIndex);
+        if (autoScrollEnabled) {
+            startAutoScroll();
+        }
+    </script>
+{% endblock %}

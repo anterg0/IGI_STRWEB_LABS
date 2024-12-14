@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}О нас{% endblock %}
+
+{% block main %}
+    <!-- Чекбокс для активации изменения стилей -->
+    <div>
+        <label>
+            <input type="checkbox" id="styleToggle"> Включить изменение стилей
+        </label>
+    </div>
+
+    <!-- Панель для изменения стилей -->
+    <div id="stylePanel" style="display: none;">
+        <h3>Изменить стиль страницы</h3>
+        <label for="fontSize">Размер шрифта:</label>
+        <select id="fontSize">
+            <option value="14px">Маленький</option>
+            <option value="18px">Средний</option>
+            <option value="22px">Большой</option>
+        </select>
+
+        <label for="textColor">Цвет текста:</label>
+        <input type="color" id="textColor" value="#000000">
+
+        <label for="bgColor">Цвет фона:</label>
+        <input type="color" id="bgColor" value="#ffffff">
+
+        <button id="resetButton">Сбросить</button>
+    </div>
+
+    <div class="features">
+        <div about>
+            <h1>О НАС</h1>
+            <p>Мебельный магазин "Уютный дом" предлагает широкий ассортимент качественной мебели для дома и офиса. Мы стремимся создавать комфортное пространство для наших клиентов, предлагая стильные и функциональные решения.</p>
+        </div>
+
+        <ul about>
+            <h2>История по годам</h2>
+            <div style="text-align: left;">
+                <li>2010: Открытие первого магазина в Москве. Начало продаж мебели от местных производителей.</li>
+                <li>2012: Расширение ассортимента. Появление эксклюзивных коллекций от европейских брендов.</li>
+                <li>2015: Открытие интернет-магазина для удобства покупок в любое время.</li>
+                <li>2018: Успешное участие в международной выставке мебели, что повысило нашу репутацию на рынке.</li>
+                <li>2020: Запуск программы лояльности для постоянных клиентов и обновление шоурума.</li>
+                <li>2023: Открытие второго магазина в Санкт-Петербурге и запуск линии экологически чистой мебели.</li>
+            </div>
+        </ul>
+
+        <ul>
+            <h2>Реквизиты</h2>
+            <div style="text-align: left;">
+                <li>Юридическое лицо: ООО "Уютный дом"</li>
+                <li>ИНН: 1234567890</li>
+                <li>КПП: 123456789</li>
+                <li>ОГРН: 1234567890123</li>
+                <li>Адрес: 123456, г. Москва, ул. Комфортная, д. 1</li>
+                <li>Телефон: +7 (495) 123-45-67</li>
+                <li>Электронная почта: info@uyutnydom.ru</li>
+            </div>
+        </ul>
+
+        <div class="certificate">
+            <img src="{% static 'images/cert.png'%}">
+            <p zindex>Z-Index</p>
+            <h2>СЕРТИФИКАТ</h2>
+            <p>Мебельный магазин "Уютный дом" сертифицирован по стандартам качества ISO 9001:2015, что подтверждает высокое качество нашей продукции и услуг.</p>
+        </div>
+        <!-- <iframe src="https://discord.com/widget?id=946154107058671666&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe> -->
+    </div>
+    <script src="{% static 'js/panel.js' %}"></script>
+{% endblock %}

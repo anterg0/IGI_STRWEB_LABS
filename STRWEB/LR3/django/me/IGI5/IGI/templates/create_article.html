@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block title %}Создание новости{% endblock %}
+
+{% block main %}
+    <div class="create-form">
+        <h1>Создание новости</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.title }}<br>
+            {{ form.full_text }}<br>
+            {{ form.date }}<br>
+            {{ form.picture }}<br>
+            <button type="submit">Создать новость</button>
+            {{ error }}
+        </form>
+    </div>
+{% endblock %}

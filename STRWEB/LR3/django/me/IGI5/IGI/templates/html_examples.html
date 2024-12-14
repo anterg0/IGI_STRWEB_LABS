@@ -1,0 +1,184 @@
+{% extends 'layout.html' %}
+
+{% block title %}HTML Examples{% endblock %}
+{% load static %}
+{% block main %}
+<div class="features">
+    <h1>HTML Elements Examples</h1>
+
+    <h2>Unordered List</h2>
+    <ul ultest>
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+    <h2>Ordered List</h2>
+    <ol start="4">
+        <li>test 1</li>
+        <li>test 2</li>
+    </ol>
+    <h2>Definition List</h2>
+    <dl>
+        <dt><dfn>HTML</dfn></dt>
+        <dd>Язык разметки, используемый для создания веб-страниц и описания их структуры.</dd>
+        
+        <dt><dfn>CSS</dfn></dt>
+        <dd>Язык стилей, который позволяет задавать оформление и представление веб-страниц.</dd>
+        
+        <dt><dfn>JavaScript</dfn></dt>
+        <dd>Язык программирования, который добавляет интерактивность и динамическое поведение веб-страницам.</dd>
+    </dl>
+    <h2>Abbreviation Example</h2>
+    <p>The <abbr title="World Wide Web">WWW</abbr> is an <mark>abbreviation</mark> for the World Wide Web.</p>
+
+    <h2>Blockquote Example</h2>
+    <blockquote>
+        "The journey of a thousand miles begins with one step." – Lao Tzu
+    </blockquote>
+    <h2>Quote Example</h2>
+    <q qtest lang="eng">This should be a quote inside of quotes.</q>
+
+    <h2>Date and Time Example</h2>
+    <time datetime="2024-09-01T12:00">September 1, 2024, Noon</time>
+
+    <h2>Poem</h2>
+    <pre>
+    Roses are red,
+    Violets are <dfn title="That's the blue color">blue</dfn>,
+    This is a poem,
+    Just for you.
+    </pre>
+
+    <h2>Link Examples</h2>
+    <a href="https://www.example.com" target="_blank">Visit Example.com</a>
+    <br>
+    <a href="/media/sample.pdf" download>Download PDF</a>
+
+    <h2>Anchors</h2>
+    <a href="#section1">Jump to Section 1</a>
+    <div id="section1">
+        <h3>Section 1</h3>
+        <p>This is the first section.</p>
+    </div>
+
+    <h2>Form Example</h2>
+    <form>
+        <label for="text-input">Text Input:</label>
+        <input type="text" id="text-input" name="text" accesskey="l">
+        <br>
+
+        <label for="select-box">Select an option:</label>
+        <select id="select-box" name="select">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+        <br>
+
+        <label for="date-input">Date:</label>
+        <input type="date" id="date-input" name="date">
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Table Example</h2>
+    <table border="1" tabletest>
+        <thead>
+            <tr>
+                <th id="hh1">Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2">Merged Cell</td>
+                <td headers="hh1">Cell 2</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Cell 5</td>
+                <td>Cell 6</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Media Elements</h2>
+    <video controls width="300">
+        <source src="{% static 'video/boys.mp4'%}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <br>
+    <audio controls>
+        <source src="/media/sample-audio.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+    <form>
+        <input type="radio" name="t" value="1">Test1
+        <input type="radio" name="t" value="2">Test2
+        <input type="radio" name="t" value="3">Test3
+        <input type="radio" name="t" value="4">Test4
+    </form>
+    <form style="text-align: left;" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Интересы</legend>
+            <label ltest>
+                <input type="checkbox" name="interest" value="спорт" checked>
+                Спорт
+            </label><br>
+            <label ltest>
+                <input type="checkbox" name="interest" value="музыка" required>
+                Музыка
+            </label><br>
+            <label ltest>
+                <input type="checkbox" name="interest" value="путешествия">
+                Путешествия
+            </label><br>
+            <label ltest>
+                <input type="checkbox" name="interest" value="литература" disabled>
+                Литература
+            </label><br>
+        </fieldset>
+        <button>Отправить</button>
+    </form>
+    <a href="#section1" test><h1>ABOBA</h1></a>
+    Color:&nbsp;<input type="color" name="color"><br>
+    Date:&nbsp;<input type="date" name="date"><br>
+    Date and time:&nbsp;<input type="datetime" name="dt"><br>
+    Date and time (local):&nbsp;<input type="datetime-local" name="dtl"><br>
+    Email:&nbsp;<input type="email" name="email"><br>
+    Number:&nbsp;<input type="number" name="number" max="1000" min="0" ntest><br>
+    Range:&nbsp;<input type="range" name="range" min="10" max="20"><br>
+    Search:&nbsp;<input type="search" name="search"><br>
+    Tel:&nbsp;<input type="tel" name="tel"><br>
+    Time:&nbsp;<input type="time" name="time"><br>
+    URL:&nbsp;<input type="url" name="url"><br>
+    Month:&nbsp;<input type="month" name="month"><br>
+    Week:&nbsp;<input type="week" name="week"><br>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+         Fruit: <input list="fruitlist" id="fave" name="fave" />
+        </p>
+        <button type="submit">Submit Vote</button>
+    </form>
+      
+    <datalist id="fruitlist">
+    <option value="Apples" label="Lovely Apples" />
+    <option value="Oranges">Refreshing Oranges</option>
+    <option value="Cherries" />
+    </datalist>
+    <select size="7" name="list">
+        <option value="v1">Not in group</option>
+        <optgroup label="Group 1">
+            <option value="v2">Item G1-1</option>
+            <option value="v3">Item G1-2</option>
+        </optgroup>
+        <optgroup label="Group 2">
+            <option value="v4">Item G2-1</option>
+            <option value="v5">Item G2-2</option>
+        </optgroup>
+    </select>
+</div>
+{% endblock %}

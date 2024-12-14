@@ -1,0 +1,236 @@
+{% extends "layout.html" %}
+
+{% block title %}Employees{% endblock %}
+
+{% block main %}
+<div class="cart-container" style="max-width: 800px; margin: auto;">
+    <h1 style="text-align: center;">Список сотрудников</h1>
+
+    <!-- Фильтр -->
+    <div>
+        <input type="text" id="filterInput" placeholder="Введите текст для фильтрации..." class="form-control" style="width: 70%; display: inline-block;">
+        <button id="filterButton" onclick="applyFilter()" class="blue-button">Найти</button>
+    </div>
+    <!-- Таблица сотрудников -->
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse;" id="employeeTable">
+        <thead>
+            <tr>
+                <th style="width: 10%; text-align: center;"><input type="checkbox" onclick="toggleAll(this); updateRewardButtonState()"> Выбрать</th>
+                <th style="width: 20%; text-align: center;">Фото</th>
+                <th style="width: 25%; text-align: center;" onclick="sortTable(2)">Город <span></span></th>
+                <th style="width: 25%; text-align: center;" onclick="sortTable(3)">Телефон <span></span></th>
+                <th style="width: 20%; text-align: center;" onclick="sortTable(4)">Имя пользователя <span></span></th>
+            </tr>
+        </thead>
+        <tbody id="employeeTableBody">
+            {% for employee in employees %}
+            <tr onclick="showEmployeeDetails(this)" class="employee-row" style="text-align: center;">
+                <td><input type="checkbox" class="employee-checkbox" value="{{ employee.id }}" onclick="updateRewardButtonState()"></td>
+                <td>
+                    {% if employee.profile_picture %}
+                    <img src="{{ employee.profile_picture.url }}" alt="Фото" style="width: 50px; height: 50px; border-radius: 50%;">
+                    {% else %}
+                    Нет фото
+                    {% endif %}
+                </td>
+                <td>{{ employee.city }}</td>
+                <td>{{ employee.phone }}</td>
+                <td>{{ employee.username }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" style="text-align: center;">Нет данных</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Навигация по страницам -->
+    <div id="paginationControls" style="text-align: center; margin-top: 20px;"></div>
+
+    <!-- Кнопка премирования -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="rewardButton" onclick="rewardSelected()" disabled class="blue-button">Премировать</button>
+        <p id="rewardMessage"></p>
+    </div>
+    <div id="detailInfo" hidden>
+        <label for="detailCity">Город: </label>
+        <span id="detailCity"></span></br>
+        <label for="detailPhone">Телефон: </label>
+        <span id="detailPhone"></span></br>
+        <label for="detailUsername">Никнейм: </label>
+        <span id="detailUsername"></span>
+    </div>
+</div>
+
+<script>
+    // Существующий JS-код для фильтрации, сортировки, пагинации
+    const rowsPerPage = 3; 
+    let currentPage = 1;
+    let originalRows = [];
+    let filteredRows = [];
+    let sortedRows = [];
+    let currentSortColumn = null;
+    let sortAscending = true;
+
+    function initializePagination() {
+        const tableBody = document.getElementById('employeeTableBody');
+        if (originalRows.length === 0) {
+            originalRows = Array.from(tableBody.rows);
+        }
+        filteredRows = originalRows.filter(row => row.style.display !== 'none');
+        sortedRows = [...filteredRows];
+
+        const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+        updateTableDisplay(sortedRows);
+        renderPaginationControls(totalPages);
+    }
+
+    function updateTableDisplay(rows) {
+        const tableBody = document.getElementById('employeeTableBody');
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        rows.forEach((row, index) => {
+            row.style.display = index >= start && index < end ? '' : 'none';
+        });
+    }
+
+    function renderPaginationControls(totalPages) {
+        const paginationControls = document.getElementById('paginationControls');
+        paginationControls.innerHTML = '';
+        if (currentPage > 1) {
+            const prevButton = document.createElement('button');
+            prevButton.innerText = '«';
+            prevButton.className = 'blue-button';
+            prevButton.addEventListener('click', () => {
+                currentPage--;
+                updateTableDisplay(sortedRows);
+                renderPaginationControls(totalPages);
+            });
+            paginationControls.appendChild(prevButton);
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.innerText = i;
+            pageButton.className = 'blue-button';
+            if (i === currentPage) pageButton.classList.add('active');
+            pageButton.addEventListener('click', () => {
+                currentPage = i;
+                updateTableDisplay(sortedRows);
+                renderPaginationControls(totalPages);
+            });
+            paginationControls.appendChild(pageButton);
+        }
+
+        if (currentPage < totalPages) {
+            const nextButton = document.createElement('button');
+            nextButton.innerText = '»';
+            nextButton.className = 'blue-button';
+            nextButton.addEventListener('click', () => {
+                currentPage++;
+                updateTableDisplay(sortedRows);
+                renderPaginationControls(totalPages);
+            });
+            paginationControls.appendChild(nextButton);
+        }
+    }
+
+    function applyFilter() {
+    const filterText = document.getElementById('filterInput').value.toLowerCase();
+    filteredRows = originalRows.filter(row => {
+        const rowText = Array.from(row.cells).map(cell => cell.innerText.toLowerCase()).join(' ');
+        return rowText.includes(filterText);
+    });
+    originalRows.forEach(row => {
+        const rowText = Array.from(row.cells).map(cell => cell.innerText.toLowerCase()).join(' ');
+        row.style.display = rowText.includes(filterText) ? '' : 'none';
+    });
+    currentPage = 1;
+    updateTableDisplay(filteredRows);
+
+    const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+    renderPaginationControls(totalPages);
+    }
+
+    function showEmployeeDetails(row) {
+    const city = row.cells[2].innerText;
+    const phone = row.cells[3].innerText;
+    const username = row.cells[4].innerText;
+    document.getElementById('detailInfo').hidden = false;
+    document.getElementById('detailCity').innerText = city;
+    document.getElementById('detailPhone').innerText = phone;
+    document.getElementById('detailUsername').innerText = username;
+    }
+
+
+    function toggleAll(source) {
+        document.querySelectorAll('.employee-checkbox').forEach(checkbox => checkbox.checked = source.checked);
+    }
+
+    function updateRewardButtonState() {
+    const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
+    document.getElementById('rewardButton').disabled = checkboxes.length === 0;
+    }
+
+    function rewardSelected() {
+        const selected = Array.from(document.querySelectorAll('.employee-checkbox:checked'));
+        if (selected.length === 0) return;
+
+        const selectedNames = selected.map(checkbox =>
+            checkbox.closest('tr').querySelector('td:nth-child(5)').innerText.trim()
+        );
+
+        const rewardMessage = `Сотрудники (${selectedNames.join(', ')}) премированы!`;
+        document.getElementById('rewardMessage').innerText = rewardMessage;
+    }
+
+    function sortTable(columnIndex) {
+    const table = document.getElementById("employeeTable");
+    const rows = Array.from(filteredRows); // Работаем с отфильтрованными строками
+
+    if (currentSortColumn === columnIndex) {
+        sortAscending = !sortAscending;
+    } else {
+        currentSortColumn = columnIndex;
+        sortAscending = true;
+    }
+
+    // Сбрасываем индикаторы сортировки
+    const indicators = table.querySelectorAll("thead th span");
+    indicators.forEach(indicator => indicator.textContent = "");
+
+    // Устанавливаем индикатор текущей сортировки
+    const indicator = table.querySelector(`thead th:nth-child(${columnIndex + 1}) span`);
+    indicator.textContent = sortAscending ? "▲" : "▼";
+
+    // Сортируем строки
+    rows.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex].innerText.trim();
+        const cellB = rowB.cells[columnIndex].innerText.trim();
+
+        if (!isNaN(cellA) && !isNaN(cellB)) { // Числовая сортировка
+            return sortAscending
+                ? parseFloat(cellA) - parseFloat(cellB)
+                : parseFloat(cellB) - parseFloat(cellA);
+        } else if (Date.parse(cellA) && Date.parse(cellB)) { // Сортировка по дате
+            return sortAscending
+                ? new Date(cellA) - new Date(cellB)
+                : new Date(cellB) - new Date(cellA);
+        } else { // Строковая сортировка
+            return sortAscending
+                ? cellA.localeCompare(cellB)
+                : cellB.localeCompare(cellA);
+        }
+    });
+
+    sortedRows = rows; // Сохраняем отсортированные строки
+    updateTableDisplay(sortedRows);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+    initializePagination(); // Инициализация пагинации
+    updateRewardButtonState(); // Обновление кнопки "Премировать"
+});
+
+</script>
+{% endblock %}
