@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
+const passport = require('passport');
+require('../config/passport-setup');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -34,6 +36,16 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
     res.json({ token, message: 'Вход выполнен успешно' });
+});
+
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+}));
+
+router.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: '/login',
+}), (req, res) => {
+    res.redirect(`http://localhost:3000/dashboard?token=${req.user.token}`); 
 });
 
 module.exports = router;

@@ -196,3 +196,323 @@ table tr:nth-child(even) {
       padding: 15px;
   }
 }
+/* ======= Стили для фильтрации товаров ======= */
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-input,
+.filter-select {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filter-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+  background-color: #555555;
+}
+
+/* ======= Стили для списка товаров ======= */
+.products-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+.product-item:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.product-name {
+  font-size: 18px;
+  color: #333333;
+  margin: 0 0 10px;
+}
+
+.product-code,
+.product-price,
+.product-manufacturer {
+  font-size: 14px;
+  color: #555555;
+  margin: 5px 0;
+}
+
+.no-products {
+  text-align: center;
+  font-size: 16px;
+  color: #888888;
+  margin-top: 20px;
+}
+/* Кнопка добавления товара */
+.create-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-button:hover {
+  background-color: #45a049;
+}
+
+.crud-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.crud-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button {
+  background-color: #2196f3;
+}
+
+.edit-button:hover {
+  background-color: #1e88e5;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.delete-button:hover {
+  background-color: #e53935;
+}
+
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.news-item {
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.news-title {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.news-title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.news-date {
+  font-size: 14px;
+  color: #888;
+}
+
+.news-content {
+  font-size: 16px;
+  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.no-products {
+  text-align: center;
+  color: #888;
+  font-size: 18px;
+}
+
+.news-detail {
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.news-detail h1 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.news-detail p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Стили для контейнера с новостями */
+.page-container {
+  padding: 20px;
+  max-width: 750px;  /* Увеличиваем ширину контейнера */
+  margin: 20px auto;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Стили для карточек новостей */
+.products-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;  /* Вертикальное отображение */
+  gap: 20px;
+}
+
+.product-item {
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-item:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для заголовка новости */
+.product-name {
+  font-size: 18px;
+  color: #333333;
+  margin: 0 0 10px;
+}
+
+/* Стили для даты */
+.product-price {
+  font-size: 14px;
+  color: #888888;
+}
+
+/* Стили для текста новости с обрезанием по одному стилю */
+.product-content {
+  font-size: 14px;
+  color: #555555;
+  white-space: nowrap; /* Ожидаем только одну строку текста */
+  overflow: hidden;
+  text-overflow: ellipsis;  /* Многоточие в конце текста */
+}
+
+/* Кнопки для CRUD операций */
+.crud-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.crud-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-button {
+  background-color: #2196f3;
+}
+
+.edit-button:hover {
+  background-color: #1e88e5;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.delete-button:hover {
+  background-color: #e53935;
+}
+
+/* Кнопка добавления новости */
+.create-button {
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-button:hover {
+  background-color: #45a049;
+}
+
+.no-products {
+  text-align: center;
+  color: #888888;
+  font-size: 18px;
+}
+
+.footer {
+  background-color: #333333;
+  color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+  margin: 5px 0;
+  font-size: 14px;
+}

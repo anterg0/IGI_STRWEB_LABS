@@ -14,6 +14,7 @@ const Navbar = () => {
                 <li><Link to="/products">Каталог</Link></li>
                 <li><Link to="/manufacturers">Производители</Link></li>
                 <li><Link to="/external">Внешние API</Link></li>
+                <li><Link to="/news">Новости</Link></li>
             </ul>
             <div className="navbar-auth">
                 {user ? (

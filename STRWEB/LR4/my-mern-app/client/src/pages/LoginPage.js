@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 const LoginPage = () => {
-    const { loginUser } = useContext(UserContext);
+    const { loginUser, fetchUserData } = useContext(UserContext);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -18,6 +18,10 @@ const LoginPage = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:7777/api/auth/google';
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -28,7 +32,7 @@ const LoginPage = () => {
 
             const decodedToken = jwtDecode(token);
             loginUser(decodedToken);
-
+            fetchUserData(token);
             setMessage(`Добро пожаловать, ${decodedToken.name || 'Пользователь'}!`);
             navigate('/');
         } catch (error) {
@@ -57,6 +61,8 @@ const LoginPage = () => {
                 />
                 <button type="submit">Войти</button>
             </form>
+            <h2>Войти через Google</h2>
+            <button onClick={handleGoogleLogin}>Войти через Google</button>
             {message && <p>{message}</p>}
         </div>
     );

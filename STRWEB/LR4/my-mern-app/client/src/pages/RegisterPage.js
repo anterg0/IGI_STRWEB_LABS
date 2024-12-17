@@ -17,6 +17,12 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        if (!formData.name || !formData.email || !formData.password || !formData.city) {
+            setMessage('Все поля обязательны!');
+            return;
+        }
+
         try {
             const response = await axios.post('/api/auth/register', formData);
             setMessage('Регистрация успешна! Пожалуйста, войдите в систему.');

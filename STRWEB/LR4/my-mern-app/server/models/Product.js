@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('./Manufacturer');
 
 const productSchema = new mongoose.Schema({
   name: {
