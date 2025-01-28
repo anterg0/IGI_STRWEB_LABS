@@ -17,6 +17,7 @@ const NewsDetailPage = () => {
     return (
         <div className="page-container">
             <h1>{newsItem.title}</h1>
+            <img src={newsItem.image} alt={newsItem.title} className="news-image" />
             <p>{new Date(newsItem.publishedAt).toLocaleString()}</p>
             <p>{newsItem.content}</p>
         </div>

@@ -1,9 +1,8 @@
-/* Общие стили для всего проекта */
 body {
   margin: 0;
   font-family: 'Arial', sans-serif;
   background-color: #f2f2f2;
-  color: #212121; /* Почти черный цвет */
+  color: #212121;
 }
 
 a {
@@ -77,11 +76,15 @@ a:hover {
 button {
   background: transparent;
   border: 1px solid #f2f2f2;
-  color: #f2f2f2;
+  color: #333333;
   padding: 5px 15px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+}
+
+button.different-color {
+  color: #f2f2f2;
 }
 
 button:hover {
@@ -322,20 +325,26 @@ table tr:nth-child(even) {
   background-color: #e53935;
 }
 
+/* Стили для списка новостей */
 .news-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Стили для отдельной новости */
 .news-item {
   padding: 15px;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* Заголовок новости */
 .news-title {
   font-size: 20px;
   color: #333;
@@ -345,16 +354,19 @@ table tr:nth-child(even) {
   white-space: nowrap;
 }
 
+/* Ссылка внутри заголовка */
 .news-title a {
   text-decoration: none;
   color: inherit;
 }
 
+/* Дата новости */
 .news-date {
   font-size: 14px;
   color: #888;
 }
 
+/* Содержание новости (ограничение по строкам) */
 .news-content {
   font-size: 16px;
   color: #555;
@@ -365,17 +377,22 @@ table tr:nth-child(even) {
   text-overflow: ellipsis;
 }
 
-.no-products {
-  text-align: center;
-  color: #888;
-  font-size: 18px;
+/* Стили для изображения в новости */
+.news-item img {
+  max-width: 100%; /* Ограничение по ширине */
+  height: auto; /* Автоматическая высота для сохранения пропорций */
+  border-radius: 8px; /* Округлые углы */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  margin-top: 10px; /* Отступ сверху */
 }
 
+/* Стили для подробностей новости */
 .news-detail {
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  margin-top: 20px; /* Отступ сверху */
 }
 
 .news-detail h1 {
@@ -388,23 +405,21 @@ table tr:nth-child(even) {
   color: #555;
 }
 
-/* Стили для контейнера с новостями */
 .page-container {
   padding: 20px;
-  max-width: 750px;  /* Увеличиваем ширину контейнера */
+  max-width: 750px;
   margin: 20px auto;
   background-color: #ffffff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
 
-/* Стили для карточек новостей */
 .products-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  flex-direction: column;  /* Вертикальное отображение */
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -504,7 +519,7 @@ table tr:nth-child(even) {
 .footer {
   background-color: #333333;
   color: #f2f2f2;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   position: fixed;
   bottom: 0;
@@ -515,4 +530,12 @@ table tr:nth-child(even) {
 .footer p {
   margin: 5px 0;
   font-size: 14px;
+}
+
+.news-image {
+  width: 400px;
+  height: auto;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }

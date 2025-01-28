@@ -26,7 +26,6 @@ const CreateProductPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Валидация на стороне клиента
         if (!name || !manufacturer || !articleCode || !price) {
             setMessage('Все поля обязательны!');
             return;

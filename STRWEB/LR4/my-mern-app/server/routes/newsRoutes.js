@@ -1,12 +1,30 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const News = require('../models/News');
 const authMiddleware = require('../middlewares/authMiddleware');
 const router = express.Router();
+const upload = require('../middlewares/uploadMiddleware');
 
-router.post('/', authMiddleware, async (req, res) => {
+const newsValidation = [
+  body('title').notEmpty().withMessage('Заголовок обязателен').isString().withMessage('Заголовок должен быть строкой').isLength({ min: 5, max: 255 }).withMessage('Заголовок должен быть от 5 до 255 символов'),
+  body('content').notEmpty().withMessage('Контент обязателен').isString().withMessage('Контент должен быть строкой').isLength({ min: 10 }).withMessage('Контент должен быть не менее 10 символов'),
+];
+
+router.post('/', authMiddleware, upload.single('image'), newsValidation, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { title, content } = req.body;
+  let imageUrl = '';
+
+  if (req.file) {
+    imageUrl = `/uploads/${req.file.filename}`;
+  }
+
   try {
-    const newNews = new News({ title, content });
+    const newNews = new News({ title, content, image: imageUrl });
     await newNews.save();
     res.status(201).json(newNews);
   } catch (err) {
@@ -33,11 +51,33 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, upload.single('image'), newsValidation, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { title, content } = req.body;
+  const { id } = req.params;
+  let imageUrl = '';
+
+  if (req.file) {
+    imageUrl = `/uploads/${req.file.filename}`;
+  }
+
   try {
-    const updatedNews = await News.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedNews) return res.status(404).json({ error: 'News not found' });
-    res.json(updatedNews);
+    const news = await News.findById(id);
+
+    if (!news) {
+      return res.status(404).json({ error: 'Новость не найдена' });
+    }
+
+    news.title = title;
+    news.content = content;
+    if (imageUrl) news.image = imageUrl;
+
+    await news.save();
+    res.status(200).json(news);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

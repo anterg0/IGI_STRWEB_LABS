@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const HomePage = () => {
     const [latestNews, setLatestNews] = useState(null);
-
+    
     useEffect(() => {
         axios.get('/api/news')
             .then(response => {
@@ -24,6 +24,7 @@ const HomePage = () => {
 
             {latestNews ? (
                 <div className="news-block">
+                    <img src={latestNews.image} alt={latestNews.title} className="news-image" />
                     <h2 className="news-title">{latestNews.title}</h2>
                     <p className="news-date">Дата: {new Date(latestNews.publishedAt).toLocaleDateString()}</p>
                     <p className="news-text">{latestNews.content}</p>

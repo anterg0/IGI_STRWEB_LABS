@@ -1,14 +1,26 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 const passport = require('passport');
 require('../config/passport-setup');
 
+const userValidation = [
+    body('name').notEmpty().withMessage('Имя обязательно').isString().withMessage('Имя должно быть строкой').isLength({ min: 2, max: 50 }).withMessage('Имя должно быть от 2 до 50 символов'),
+    body('email').isEmail().withMessage('Неверный формат электронной почты').normalizeEmail(),
+    body('password').optional().isLength({ min: 6 }).withMessage('Пароль должен содержать не менее 6 символов'),
+  ];
+
 const JWT_SECRET = process.env.JWT_SECRET;
 
-router.post('/register', async (req, res) => {
+router.post('/register', userValidation, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { name, email, password, city } = req.body;
 
     const newUser = new User({ name, email, password: password, city });

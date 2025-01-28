@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">
-                <Link to="/">Мебельный магазин</Link>
+                <Link to="/">Уютный дом</Link>
             </div>
             <ul className="navbar-links">
                 <li><Link to="/products">Каталог</Link></li>
@@ -20,7 +20,7 @@ const Navbar = () => {
                 {user ? (
                     <div className="user-info">
                         <span>Привет, {user.name}!</span>
-                        <button onClick={logoutUser}>Выйти</button>
+                        <button className='different-color' onClick={logoutUser}>Выйти</button>
                     </div>
                 ) : (
                     <div className="auth-links">

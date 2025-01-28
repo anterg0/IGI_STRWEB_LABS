@@ -3,6 +3,8 @@ const connectToDatabase = require('./db');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const session = require('express-session');
+const path = require('path');
+
 dotenv.config();
 require('./config/passport-setup');
 
@@ -23,6 +25,8 @@ app.use(session({
 }));
 
 app.use('/api', require('./routes/userRoutes'));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/auth', require('./routes/authRoutes'));
 
